@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Young — Knowledge Atlas</title>
+<style>
+/*============================================================
+  Young — Knowledge Atlas v4
+  Morandi × Nature · Magazine Editorial · Animated Decorations
+============================================================*/
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+:root{
+  --bg:#F7F6F3;--bg-card:#FFFFFF;
+  --fg:#3A3832;--fg2:#6B7280;--fg3:#9CA3AF;--fg-faint:#D1D0CC;
+  --border:rgba(0,0,0,0.06);
+  --shadow-sm:0 1px 3px rgba(0,0,0,0.04);
+  --shadow-md:0 4px 16px rgba(0,0,0,0.06);
+
+  --track-growth:#7BA38E;--track-growth-light:#E8F0EB;--track-growth-mid:#B5D1C1;
+  --track-career:#B8926A;--track-career-light:#F3ECE3;--track-career-mid:#D4BFA8;
+  --track-influence:#8E7BAF;--track-influence-light:#EDE8F4;--track-influence-mid:#C4B8D6;
+  --track-ultimate:#C4866B;--track-ultimate-light:#F4E8E2;--track-ultimate-mid:#DDB8A6;
+
+  --font-display:'SF Pro Display',-apple-system,'PingFang SC','Noto Sans SC',sans-serif;
+  --font-body:'SF Pro Text',-apple-system,'PingFang SC','Noto Sans SC',sans-serif;
+  --font-serif:'Georgia','Noto Serif SC',serif;
+}
+[data-theme="dark"]{
+  --bg:#1C1B19;--bg-card:#262523;
+  --fg:#E2E0DB;--fg2:#9E9B94;--fg3:#6E6B64;--fg-faint:#3A3836;
+  --border:rgba(255,255,255,0.06);
+  --shadow-sm:0 1px 3px rgba(0,0,0,0.15);--shadow-md:0 4px 16px rgba(0,0,0,0.2);
+  --track-growth:#8FBD9F;--track-growth-light:rgba(143,189,159,0.1);--track-growth-mid:rgba(143,189,159,0.2);
+  --track-career:#C9A67A;--track-career-light:rgba(201,166,122,0.1);--track-career-mid:rgba(201,166,122,0.2);
+  --track-influence:#A48EC4;--track-influence-light:rgba(164,142,196,0.1);--track-influence-mid:rgba(164,142,196,0.2);
+  --track-ultimate:#D49A7E;--track-ultimate-light:rgba(212,154,126,0.1);--track-ultimate-mid:rgba(212,154,126,0.2);
+}
+body{font-family:var(--font-body);background:var(--bg);color:var(--fg);line-height:1.8;-webkit-font-smoothing:antialiased;transition:background .4s,color .4s;overflow-x:hidden}
+
+/* ========== Header ========== */
+.site-header{padding:24px 40px;max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between}
+.logo{font-family:var(--font-display);font-size:15px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--fg)}
+.logo span{font-weight:300;color:var(--track-growth)}
+.header-actions{display:flex;align-items:center;gap:12px}
+.progress-pill{display:flex;align-items:center;gap:8px;font-size:12px;font-weight:500;color:var(--fg2);background:var(--bg-card);border:1px solid var(--border);padding:6px 14px;border-radius:20px}
+.progress-pill .dot{width:8px;height:8px;border-radius:50%;background:var(--track-growth);animation:pulse 2s infinite}
+.progress-pill strong{color:var(--fg);font-variant-numeric:tabular-nums}
+.theme-btn{width:34px;height:34px;border-radius:50%;border:1px solid var(--border);background:var(--bg-card);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s;color:var(--fg2)}
+.theme-btn:hover{border-color:var(--fg3);color:var(--fg)}
+.theme-btn svg{width:16px;height:16px}
+
+/* ========== Hero ========== */
+.hero{text-align:center;padding:72px 40px 48px;max-width:720px;margin:0 auto;position:relative}
+.hero-eyebrow{font-size:11px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--track-growth);margin-bottom:16px}
+.hero h1{font-family:var(--font-serif);font-size:clamp(36px,5.5vw,56px);font-weight:400;letter-spacing:-0.5px;line-height:1.2;margin-bottom:20px;font-style:italic}
+.hero h1 em{font-style:normal;font-weight:700;color:var(--track-growth)}
+.hero p{font-size:15px;color:var(--fg2);line-height:1.9;font-weight:300;max-width:500px;margin:0 auto}
+.hero-progress{max-width:360px;margin:28px auto 0;display:flex;align-items:center;gap:12px}
+.hero-progress .bar-track{flex:1;height:4px;border-radius:2px;background:var(--fg-faint);overflow:hidden}
+.hero-progress .bar-fill{height:100%;border-radius:2px;background:linear-gradient(90deg,var(--track-growth),var(--track-career));width:33%;transition:width .8s ease}
+.hero-progress .bar-label{font-size:12px;font-weight:600;color:var(--fg2);white-space:nowrap;font-variant-numeric:tabular-nums}
+
+/* ========== Track Section ========== */
+.track{position:relative;padding:56px 0 40px}
+.track-inner{max-width:1200px;margin:0 auto;padding:0 40px;display:grid;grid-template-columns:1fr minmax(0,640px) 1fr;gap:24px;align-items:start}
+
+/* ========== Side Decorations ========== */
+.side-deco{padding-top:80px;display:flex;flex-direction:column;gap:28px}
+.side-deco.right{align-items:flex-end;text-align:right}
+.side-deco.left{align-items:flex-start;text-align:left}
+.side-quote{font-family:var(--font-serif);font-size:14px;font-style:italic;color:var(--fg3);line-height:1.7;max-width:170px;opacity:0.65;position:relative;padding-left:12px;border-left:2px solid var(--fg-faint)}
+.side-deco.right .side-quote{padding-left:0;padding-right:12px;border-left:none;border-right:2px solid var(--fg-faint)}
+.side-stat{display:flex;flex-direction:column;gap:2px}
+.side-stat .big{font-family:var(--font-display);font-size:40px;font-weight:200;letter-spacing:-1px;line-height:1}
+.side-stat .tiny{font-size:10px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--fg3)}
+
+/* SVG line decorations */
+.side-lines{width:100%;max-width:160px;height:120px;overflow:visible}
+.side-lines .deco-line{fill:none;stroke-width:1.5;stroke-linecap:round;opacity:0.25}
+.side-lines .deco-circle{fill:none;stroke-width:1;opacity:0.2}
+.side-lines .deco-dot{opacity:0.35}
+
+/* ========== Decoration Animations ========== */
+@keyframes drawLine{from{stroke-dashoffset:200}to{stroke-dashoffset:0}}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.4}}
+@keyframes growCircle{from{r:0;opacity:0.3}to{r:8;opacity:0}}
+@keyframes drift{0%{transform:translate(0,0)}33%{transform:translate(4px,-3px)}66%{transform:translate(-2px,2px)}100%{transform:translate(0,0)}}
+
+.anim-draw{stroke-dasharray:200;animation:drawLine 3s ease forwards}
+.anim-float{animation:float 4s ease-in-out infinite}
+.anim-float-delay{animation:float 4s ease-in-out infinite;animation-delay:1.5s}
+.anim-drift{animation:drift 8s ease-in-out infinite}
+.anim-pulse-circle{animation:growCircle 3s ease-in-out infinite}
+
+/* ========== Track Header ========== */
+.nodes-col{grid-column:2;position:relative}
+.track-head{display:flex;align-items:baseline;gap:14px;margin-bottom:4px}
+.track-label{font-size:11px;font-weight:600;letter-spacing:2px;text-transform:uppercase;padding:4px 12px;border-radius:4px}
+.track-name{font-family:var(--font-display);font-size:22px;font-weight:600;letter-spacing:-0.3px}
+.track-sub{font-size:13px;color:var(--fg3);font-weight:300;font-style:italic;margin-left:auto}
+
+.track--growth .track-label{background:var(--track-growth-light);color:var(--track-growth)}
+.track--growth .track-name{color:var(--track-growth)}
+.track--growth .side-stat .big{color:var(--track-growth)}
+.track--career .track-label{background:var(--track-career-light);color:var(--track-career)}
+.track--career .track-name{color:var(--track-career)}
+.track--career .side-stat .big{color:var(--track-career)}
+.track--influence .track-label{background:var(--track-influence-light);color:var(--track-influence)}
+.track--influence .track-name{color:var(--track-influence)}
+.track--influence .side-stat .big{color:var(--track-influence)}
+.track--ultimate .track-label{background:var(--track-ultimate-light);color:var(--track-ultimate)}
+.track--ultimate .track-name{color:var(--track-ultimate)}
+.track--ultimate .side-stat .big{color:var(--track-ultimate)}
+
+/* ========== Path SVG ========== */
+.path-svg{position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0}
+.path-line{fill:none;stroke-width:2;stroke-linecap:round;stroke-dasharray:6 4;opacity:0.3}
+.track--growth .path-line{stroke:var(--track-growth)}
+.track--career .path-line{stroke:var(--track-career)}
+.track--influence .path-line{stroke:var(--track-influence)}
+.track--ultimate .path-line{stroke:var(--track-ultimate)}
+
+/* ========== Nodes ========== */
+.nodes{display:flex;flex-direction:column;gap:20px;position:relative;z-index:1}
+.node{display:flex;align-items:flex-start;gap:20px}
+.node:nth-child(odd){align-self:flex-start;max-width:560px}
+.node:nth-child(even){align-self:flex-end;max-width:560px}
+
+.node-dot{flex-shrink:0;width:46px;height:46px;border-radius:50%;display:flex;align-items:center;justify-content:center;transition:transform .3s,box-shadow .3s;position:relative}
+.node-dot svg{width:20px;height:20px}
+.node-dot::after{content:'';position:absolute;inset:-4px;border-radius:50%;border:2px solid transparent;transition:border-color .3s}
+.node:hover .node-dot{transform:scale(1.1)}
+.node:hover .node-dot::after{border-color:currentColor;opacity:0.15}
+.node-dot.live{background:var(--track-growth);color:#fff}
+.node-dot.ready{background:var(--track-career);color:#fff}
+.node-dot.building{background:var(--bg-card);border:2px dashed var(--fg3);color:var(--fg3)}
+.node-dot.locked{background:var(--bg-card);border:2px solid var(--border);color:var(--fg3);opacity:0.5}
+
+.node-card{flex:1;background:var(--bg-card);border:1px solid var(--border);border-radius:14px;padding:22px 26px;transition:all .3s cubic-bezier(.4,0,.2,1)}
+.node:hover .node-card{box-shadow:var(--shadow-md);transform:translateY(-2px)}
+.node-card .status{display:inline-block;font-size:10px;font-weight:600;letter-spacing:1px;text-transform:uppercase;padding:3px 10px;border-radius:3px;margin-bottom:10px}
+.status.s-live{background:var(--track-growth-light);color:var(--track-growth)}
+.status.s-ready{background:var(--track-career-light);color:var(--track-career)}
+.status.s-building{background:var(--track-influence-light);color:var(--track-influence)}
+.status.s-locked{background:var(--bg);color:var(--fg3)}
+
+.node-card h3{font-family:var(--font-display);font-size:17px;font-weight:600;letter-spacing:-0.2px;margin-bottom:4px}
+.node-card .card-sub{font-size:12px;font-weight:500;margin-bottom:8px}
+.node-card .card-desc{font-size:13px;color:var(--fg2);line-height:1.8;font-weight:300;margin-bottom:12px}
+.node-card .tags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px}
+.node-card .tag{font-size:11px;color:var(--fg3);padding:3px 9px;border-radius:4px;background:var(--bg);font-weight:400}
+.node-card .card-link{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:500;text-decoration:none;transition:gap .2s}
+.node-card .card-link svg{width:14px;height:14px;transition:transform .2s}
+.node-card .card-link:hover svg{transform:translateX(3px)}
+.node-card .card-hint{font-size:12px;color:var(--fg3);font-weight:300;font-style:italic;padding-top:10px;border-top:1px solid var(--border);display:flex;align-items:center;gap:6px}
+.node-card .card-hint svg{width:13px;height:13px;flex-shrink:0;opacity:0.4}
+
+.track--growth .card-sub{color:var(--track-growth)}.track--growth .card-link{color:var(--track-growth)}
+.track--career .card-sub{color:var(--track-career)}.track--career .card-link{color:var(--track-career)}
+.track--influence .card-sub{color:var(--track-influence)}.track--influence .card-link{color:var(--track-influence)}
+.track--ultimate .card-sub{color:var(--track-ultimate)}.track--ultimate .card-link{color:var(--track-ultimate)}
+
+.node.is-locked .node-card{opacity:0.5}
+.node.is-locked:hover .node-card{opacity:0.7;box-shadow:var(--shadow-sm);transform:translateY(-1px)}
+
+/* ========== Divider ========== */
+.track-divider{max-width:1200px;margin:0 auto;padding:0 40px}
+.track-divider hr{border:none;height:1px;background:linear-gradient(90deg,transparent,var(--border),transparent)}
+
+/* ========== Vision / Stats ========== */
+.vision{text-align:center;padding:72px 40px 40px;max-width:600px;margin:0 auto}
+.vision h2{font-family:var(--font-serif);font-size:22px;font-weight:400;font-style:italic;color:var(--fg2);margin-bottom:12px}
+.vision h2 strong{font-style:normal;font-weight:700;color:var(--fg)}
+.vision p{font-size:14px;color:var(--fg3);font-weight:300;line-height:1.9}
+
+.stats-row{max-width:1200px;margin:0 auto;display:flex;justify-content:center;gap:56px;padding:48px 40px}
+.stat-item{text-align:center}
+.stat-item .stat-num{font-family:var(--font-display);font-size:36px;font-weight:200;letter-spacing:-1px;line-height:1.2}
+.stat-item .stat-label{font-size:10px;color:var(--fg3);font-weight:600;letter-spacing:1.5px;text-transform:uppercase;margin-top:4px}
+
+/* ========== Craft Section — Skills Showcase ========== */
+.craft{max-width:1200px;margin:0 auto;padding:64px 40px 40px;position:relative}
+.craft-header{text-align:center;margin-bottom:40px}
+.craft-eyebrow{font-size:11px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--track-career);margin-bottom:8px}
+.craft-title{font-family:var(--font-serif);font-size:28px;font-weight:400;font-style:italic;letter-spacing:-0.3px;margin-bottom:8px}
+.craft-title em{font-style:normal;font-weight:700;color:var(--track-career)}
+.craft-desc{font-size:14px;color:var(--fg2);font-weight:300;line-height:1.8;max-width:480px;margin:0 auto}
+
+.craft-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:20px}
+
+.skill-card{
+  background:var(--bg-card);border:1px solid var(--border);
+  border-radius:16px;padding:28px 28px 24px;position:relative;
+  transition:all .3s cubic-bezier(.4,0,.2,1);overflow:hidden;
+}
+.skill-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:3px;
+  background:linear-gradient(90deg,var(--track-career),var(--track-growth));
+  border-radius:16px 16px 0 0;opacity:0.7;
+}
+.skill-card:hover{box-shadow:var(--shadow-md);transform:translateY(-3px)}
+
+.skill-card .skill-top{display:flex;align-items:center;gap:14px;margin-bottom:14px}
+.skill-card .skill-icon{
+  width:44px;height:44px;border-radius:12px;
+  background:var(--track-career-light);color:var(--track-career);
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;
+}
+.skill-card .skill-icon svg{width:22px;height:22px}
+.skill-card .skill-meta{flex:1}
+.skill-card .skill-name{font-family:var(--font-display);font-size:16px;font-weight:600;letter-spacing:-0.2px}
+.skill-card .skill-author{font-size:11px;color:var(--fg3);font-weight:500}
+
+.skill-card .skill-badge{
+  display:inline-flex;align-items:center;gap:4px;
+  font-size:10px;font-weight:600;letter-spacing:0.5px;text-transform:uppercase;
+  padding:3px 10px;border-radius:3px;
+  background:var(--track-growth-light);color:var(--track-growth);
+}
+
+.skill-card .skill-desc{font-size:13px;color:var(--fg2);line-height:1.75;font-weight:300;margin-bottom:14px}
+
+.skill-card .skill-tags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}
+.skill-card .skill-tags .tag{font-size:10px;color:var(--fg3);padding:2px 8px;border-radius:3px;background:var(--bg);font-weight:500;letter-spacing:0.3px}
+
+.skill-card .skill-links{display:flex;gap:16px;align-items:center}
+.skill-card .skill-link{
+  display:inline-flex;align-items:center;gap:5px;
+  font-size:12px;font-weight:500;color:var(--track-career);
+  text-decoration:none;transition:gap .2s;
+}
+.skill-card .skill-link svg{width:13px;height:13px;transition:transform .2s}
+.skill-card .skill-link:hover svg{transform:translateX(2px)}
+
+/* Craft side deco */
+.craft-deco-left,.craft-deco-right{
+  position:absolute;top:50%;pointer-events:none;
+}
+.craft-deco-left{left:20px;transform:translateY(-50%)}
+.craft-deco-right{right:20px;transform:translateY(-50%)}
+
+.site-footer{text-align:center;padding:32px;font-size:11px;color:var(--fg3);font-weight:300;letter-spacing:0.5px}
+
+/* ========== Responsive ========== */
+@media(max-width:900px){
+  .track-inner{grid-template-columns:1fr;padding:0 24px}
+  .side-deco{display:none}
+  .track-head,.nodes-col{grid-column:1}
+  .node{max-width:100%!important}
+  .node:nth-child(even){align-self:flex-start}
+  .hero{padding:48px 24px 40px}
+  .hero h1{font-size:32px}
+  .site-header{padding:20px 24px}
+  .stats-row{gap:28px;padding:32px 24px}
+  .stat-item .stat-num{font-size:28px}
+  .path-svg{display:none}
+  .craft{padding:40px 24px 32px}
+  .craft-grid{grid-template-columns:1fr}
+  .craft-deco-left,.craft-deco-right{display:none}
+}
+
+/* ========== Entry Animations ========== */
+@keyframes nodeIn{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+.node{animation:nodeIn .6s ease both}
+.node:nth-child(1){animation-delay:0s}.node:nth-child(2){animation-delay:.08s}.node:nth-child(3){animation-delay:.16s}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+.side-deco>*{animation:fadeIn .8s ease both}
+.side-deco>*:nth-child(1){animation-delay:.2s}
+.side-deco>*:nth-child(2){animation-delay:.4s}
+.side-deco>*:nth-child(3){animation-delay:.6s}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="logo">Young <span>Atlas</span></div>
+  <div class="header-actions">
+    <div class="progress-pill"><span class="dot"></span><strong>4</strong> / 12 unlocked</div>
+    <button class="theme-btn" onclick="toggleTheme()" aria-label="Toggle theme">
+      <svg class="ico-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+      <svg class="ico-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="display:none"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+    </button>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="hero-eyebrow">Personal Knowledge System</div>
+  <h1>The Map Is Not<br>the <em>Territory</em></h1>
+  <p>每一座知识库都是认知版图上的恒星。不必按顺序，选择你当下最需要的方向，点亮属于你的星图。</p>
+  <div class="hero-progress"><div class="bar-track"><div class="bar-fill"></div></div><span class="bar-label">33% explored</span></div>
+</section>
+
+<!-- ===== TRACK 1: 成长基石 ===== -->
+<section class="track track--growth">
+  <div class="track-inner">
+    <div class="side-deco left">
+      <svg class="side-lines anim-drift" viewBox="0 0 160 120">
+        <path class="deco-line anim-draw" d="M10,100 C40,80 30,40 80,30 S140,50 150,20" stroke="var(--track-growth)" stroke-dasharray="200"/>
+        <circle class="deco-circle" cx="80" cy="30" r="12" stroke="var(--track-growth)"/>
+        <circle class="deco-dot anim-float" cx="10" cy="100" r="3" fill="var(--track-growth)"/>
+        <circle class="deco-dot anim-float-delay" cx="150" cy="20" r="3" fill="var(--track-growth)"/>
+      </svg>
+      <div class="side-quote">The beginning is always today.</div>
+      <div class="side-stat"><span class="big">4</span><span class="tiny">Libraries Live</span></div>
+    </div>
+
+    <div class="nodes-col">
+      <div class="track-head">
+        <span class="track-label">Track 01</span>
+        <span class="track-name">成长基石</span>
+        <span class="track-sub">核心认知已建立</span>
+      </div>
+      <svg class="path-svg" viewBox="0 0 640 580" preserveAspectRatio="none">
+        <path class="path-line" d="M60,40 C180,30 140,140 300,150 S500,60 520,200 S340,300 380,400 S500,480 480,540"/>
+      </svg>
+      <div class="nodes">
+        <div class="node">
+          <div class="node-dot live"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg></div>
+          <div class="node-card">
+            <span class="status s-live">Live</span>
+            <h3>UI 设计大师</h3>
+            <div class="card-sub">提升美感 · 设计思维</div>
+            <p class="card-desc">系统化的 UI 设计知识体系。从色彩理论、排版法则到组件规范，用设计师的视角重构审美直觉。</p>
+            <div class="tags"><span class="tag">设计系统</span><span class="tag">配色理论</span><span class="tag">排版法则</span></div>
+            <a class="card-link" href="https://oriri-101.github.io/ui-design-glossary/" target="_blank">进入知识库 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+          </div>
+        </div>
+        <div class="node">
+          <div class="node-dot live"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+          <div class="node-card">
+            <span class="status s-live">Live</span>
+            <h3>方法论大师</h3>
+            <div class="card-sub">9 章 61 条 · 提高思考深度</div>
+            <p class="card-desc">专业表达方法论体系——从金字塔原理到费曼技巧，从 MECE 到贝叶斯思维，系统武装思考与表达。</p>
+            <div class="tags"><span class="tag">结构化思维</span><span class="tag">叙事说服</span><span class="tag">认知科学</span></div>
+            <a class="card-link" href="https://oriri-101.github.io/writing-methodology-glossary/" target="_blank">进入知识库 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+          </div>
+        </div>
+        <div class="node">
+          <div class="node-dot live"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+          <div class="node-card">
+            <span class="status s-live">Live</span>
+            <h3>药品管理大师</h3>
+            <div class="card-sub">家人健康管理</div>
+            <p class="card-desc">家庭药品智能管理系统。追踪用药记录、保质期提醒、药品交互查询，守护全家人的健康。</p>
+            <div class="tags"><span class="tag">用药管理</span><span class="tag">健康追踪</span><span class="tag">家庭守护</span></div>
+            <a class="card-link" href="https://oriri-101.github.io/medicine-tracker/" target="_blank">进入知识库 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+          </div>
+        </div>
+        <div class="node">
+          <div class="node-dot live"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
+          <div class="node-card">
+            <span class="status s-live">Live</span>
+            <h3>金融素养大师</h3>
+            <div class="card-sub">投资决策 · 财务自由</div>
+            <p class="card-desc">从资产配置到基金分析，从宏观经济到个股研判。系统化金融知识体系，支撑每一个投资决策。</p>
+            <div class="tags"><span class="tag">资产配置</span><span class="tag">基金分析</span><span class="tag">风险管理</span></div>
+            <a class="card-link" href="https://oriri-101.github.io/financial-literacy-glossary/" target="_blank">进入知识库 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-deco right">
+      <div class="side-quote">Well begun is half done.</div>
+      <div class="side-stat"><span class="big">61</span><span class="tiny">Entries Written</span></div>
+      <svg class="side-lines anim-drift" viewBox="0 0 160 120" style="animation-delay:2s">
+        <path class="deco-line anim-draw" d="M150,110 C120,90 130,50 80,40 S20,60 10,20" stroke="var(--track-growth)" stroke-dasharray="200" style="animation-delay:.5s"/>
+        <circle class="deco-circle" cx="80" cy="40" r="8" stroke="var(--track-growth-mid)"/>
+        <circle class="deco-dot anim-float" cx="150" cy="110" r="2.5" fill="var(--track-growth)"/>
+        <circle class="deco-dot anim-float-delay" cx="10" cy="20" r="2.5" fill="var(--track-growth)"/>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<div class="track-divider"><hr></div>
+
+<!-- ===== TRACK 2: 职业加速 ===== -->
+<section class="track track--career">
+  <div class="track-inner">
+    <div class="side-deco left">
+      <svg class="side-lines anim-drift" viewBox="0 0 160 120">
+        <path class="deco-line anim-draw" d="M20,20 Q80,10 100,60 T140,100" stroke="var(--track-career)" stroke-dasharray="200"/>
+        <circle class="deco-circle" cx="100" cy="60" r="10" stroke="var(--track-career-mid)"/>
+        <circle class="deco-dot anim-float" cx="20" cy="20" r="3" fill="var(--track-career)"/>
+        <line class="deco-line" x1="60" y1="90" x2="130" y2="85" stroke="var(--track-career)" style="animation-delay:1s" stroke-dasharray="200"/>
+      </svg>
+      <div class="side-quote">Invest in yourself. Your career is the engine of your wealth.</div>
+    </div>
+
+    <div class="nodes-col">
+      <div class="track-head">
+        <span class="track-label">Track 02</span>
+        <span class="track-name">职业加速</span>
+        <span class="track-sub">核心竞争力升维</span>
+      </div>
+      <svg class="path-svg" viewBox="0 0 640 380" preserveAspectRatio="none">
+        <path class="path-line" d="M580,40 C440,50 480,140 300,150 S100,70 90,200 S280,310 250,350"/>
+      </svg>
+      <div class="nodes">
+        <div class="node">
+          <div class="node-dot building"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div>
+          <div class="node-card">
+            <span class="status s-building">Planned</span>
+            <h3>产品管理大师</h3>
+            <div class="card-sub">PRD · 需求分析 · 数据驱动</div>
+            <p class="card-desc">产品经理的核心武器库——需求分析、用户研究、竞品分析、路线图管理，从执行到策略的跃迁。</p>
+            <div class="tags"><span class="tag">需求管理</span><span class="tag">用户研究</span><span class="tag">数据指标</span></div>
+            <div class="card-hint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> 推荐在金融素养之后构建</div>
+          </div>
+        </div>
+        <div class="node">
+          <div class="node-dot building"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></div>
+          <div class="node-card">
+            <span class="status s-building">Planned</span>
+            <h3>数据分析大师</h3>
+            <div class="card-sub">SQL · 可视化 · AB 测试</div>
+            <p class="card-desc">数据驱动决策的完整工具链——SQL 查询、指标体系设计、AB 实验方法论、数据可视化叙事。</p>
+            <div class="tags"><span class="tag">SQL</span><span class="tag">AB 测试</span><span class="tag">指标体系</span></div>
+            <div class="card-hint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> 可随时开启，与产品管理互补</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-deco right">
+      <div class="side-stat"><span class="big">2</span><span class="tiny">To Build Next</span></div>
+      <svg class="side-lines anim-drift" viewBox="0 0 160 120" style="animation-delay:1s">
+        <path class="deco-line anim-draw" d="M150,100 Q100,80 90,40 T30,20" stroke="var(--track-career)" stroke-dasharray="200" style="animation-delay:.8s"/>
+        <circle class="deco-circle" cx="90" cy="40" r="6" stroke="var(--track-career)"/>
+        <circle class="deco-dot anim-float" cx="30" cy="20" r="2" fill="var(--track-career)"/>
+      </svg>
+      <div class="side-quote">The expert in anything was once a beginner.</div>
+    </div>
+  </div>
+</section>
+
+<div class="track-divider"><hr></div>
+
+<!-- ===== TRACK 3: 影响力 ===== -->
+<section class="track track--influence">
+  <div class="track-inner">
+    <div class="side-deco left">
+      <svg class="side-lines anim-drift" viewBox="0 0 160 120">
+        <path class="deco-line anim-draw" d="M10,60 C50,20 100,80 150,40" stroke="var(--track-influence)" stroke-dasharray="200"/>
+        <path class="deco-line anim-draw" d="M10,90 C60,70 110,110 150,80" stroke="var(--track-influence-mid)" stroke-dasharray="200" style="animation-delay:1s"/>
+        <circle class="deco-dot anim-float" cx="80" cy="50" r="4" fill="var(--track-influence)"/>
+      </svg>
+      <div class="side-stat"><span class="big">100K+</span><span class="tiny">Followers Now</span></div>
+    </div>
+
+    <div class="nodes-col">
+      <div class="track-head">
+        <span class="track-label">Track 03</span>
+        <span class="track-name">影响力构建</span>
+        <span class="track-sub">可随时开启任意一个</span>
+      </div>
+      <svg class="path-svg" viewBox="0 0 640 440" preserveAspectRatio="none">
+        <path class="path-line" d="M60,40 C200,30 160,150 340,140 S520,60 540,200 S360,310 390,400"/>
+      </svg>
+      <div class="nodes">
+        <div class="node is-locked">
+          <div class="node-dot locked"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19l7-7 3 3-7 7-3-3z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/><path d="M2 2l7.586 7.586"/><circle cx="11" cy="11" r="2"/></svg></div>
+          <div class="node-card">
+            <span class="status s-locked">Open to Build</span>
+            <h3>内容创作大师</h3>
+            <div class="card-sub">爆款公式 · 选题策略 · 平台运营</div>
+            <p class="card-desc">从选题到分发的全链路创作方法论。小红书、抖音、B站、公众号四平台运营策略。</p>
+            <div class="tags"><span class="tag">选题策略</span><span class="tag">平台算法</span><span class="tag">变现模型</span></div>
+            <div class="card-hint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg> 百万粉路径的核心引擎</div>
+          </div>
+        </div>
+        <div class="node is-locked">
+          <div class="node-dot locked"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><line x1="9" y1="1" x2="9" y2="4"/><line x1="15" y1="1" x2="15" y2="4"/><line x1="9" y1="20" x2="9" y2="23"/><line x1="15" y1="20" x2="15" y2="23"/><line x1="20" y1="9" x2="23" y2="9"/><line x1="20" y1="14" x2="23" y2="14"/><line x1="1" y1="9" x2="4" y2="9"/><line x1="1" y1="14" x2="4" y2="14"/></svg></div>
+          <div class="node-card">
+            <span class="status s-locked">Open to Build</span>
+            <h3>AI 工程大师</h3>
+            <div class="card-sub">Agent · RAG · Multi-Agent</div>
+            <p class="card-desc">从 Prompt Engineering 到 Multi-Agent 系统，构建 AI 原生工作流的核心能力。</p>
+            <div class="tags"><span class="tag">Prompt Engineering</span><span class="tag">RAG</span><span class="tag">Agent</span></div>
+            <div class="card-hint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg> AI 极客人设的知识底座</div>
+          </div>
+        </div>
+        <div class="node is-locked">
+          <div class="node-dot locked"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></div>
+          <div class="node-card">
+            <span class="status s-locked">Open to Build</span>
+            <h3>商业洞察大师</h3>
+            <div class="card-sub">商业模式 · 战略分析 · 行业研究</div>
+            <p class="card-desc">商业分析的顶层视角——竞争格局、商业模式画布、行业趋势研判。</p>
+            <div class="tags"><span class="tag">商业模式</span><span class="tag">竞争分析</span><span class="tag">行业研究</span></div>
+            <div class="card-hint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg> 从执行层到战略层的认知跃迁</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-deco right">
+      <div class="side-quote">Be so good they can't ignore you.</div>
+      <svg class="side-lines anim-drift" viewBox="0 0 160 120" style="animation-delay:3s">
+        <circle class="deco-circle" cx="80" cy="60" r="30" stroke="var(--track-influence-mid)"/>
+        <circle class="deco-circle" cx="80" cy="60" r="15" stroke="var(--track-influence)"/>
+        <circle class="deco-dot anim-float" cx="80" cy="60" r="3" fill="var(--track-influence)"/>
+        <path class="deco-line anim-draw" d="M30,100 L130,20" stroke="var(--track-influence)" stroke-dasharray="200" style="animation-delay:1.5s"/>
+      </svg>
+      <div class="side-stat"><span class="big">1M</span><span class="tiny">Target Followers</span></div>
+    </div>
+  </div>
+</section>
+
+<div class="track-divider"><hr></div>
+
+<!-- ===== TRACK 4: 终极形态 ===== -->
+<section class="track track--ultimate">
+  <div class="track-inner">
+    <div class="side-deco left">
+      <div class="side-quote">Freedom is not given. It is taken — one skill at a time.</div>
+      <svg class="side-lines anim-drift" viewBox="0 0 160 120">
+        <path class="deco-line anim-draw" d="M20,100 C60,60 50,30 100,20 S140,50 150,10" stroke="var(--track-ultimate)" stroke-dasharray="200"/>
+        <path class="deco-line anim-draw" d="M20,110 C70,80 90,100 140,60" stroke="var(--track-ultimate-mid)" stroke-dasharray="200" style="animation-delay:1.2s"/>
+        <circle class="deco-dot anim-float-delay" cx="100" cy="20" r="3" fill="var(--track-ultimate)"/>
+      </svg>
+    </div>
+
+    <div class="nodes-col">
+      <div class="track-head">
+        <span class="track-label">Track 04</span>
+        <span class="track-name">终极形态</span>
+        <span class="track-sub">融合升级 · 自由选择</span>
+      </div>
+      <svg class="path-svg" viewBox="0 0 640 440" preserveAspectRatio="none">
+        <path class="path-line" d="M580,40 C420,50 460,150 280,160 S80,80 70,220 S260,330 230,400"/>
+      </svg>
+      <div class="nodes">
+        <div class="node is-locked">
+          <div class="node-dot locked"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+          <div class="node-card">
+            <span class="status s-locked">Open to Build</span>
+            <h3>团队领导力大师</h3>
+            <div class="card-sub">带团队 · 影响力 · 向上管理</div>
+            <p class="card-desc">从 IC 到 Manager 的跃迁手册——团队搭建、绩效管理、向上汇报、跨部门协作。</p>
+            <div class="tags"><span class="tag">团队管理</span><span class="tag">向上管理</span><span class="tag">OKR</span></div>
+            <div class="card-hint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg> 晋升路径的核心能力</div>
+          </div>
+        </div>
+        <div class="node is-locked">
+          <div class="node-dot locked"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 8l6 6"/><path d="M4 14l6-6 2-3"/><path d="M2 5h12"/><path d="M7 2h1"/><path d="M22 22l-5-10-5 10"/><path d="M14 18h6"/></svg></div>
+          <div class="node-card">
+            <span class="status s-locked">Open to Build</span>
+            <h3>英语精进大师</h3>
+            <div class="card-sub">商务英语 · 技术英语 · 表达力</div>
+            <p class="card-desc">面向工作场景的英语能力升级——商务邮件、技术文档、英文演讲、跨文化沟通。</p>
+            <div class="tags"><span class="tag">商务写作</span><span class="tag">技术词汇</span><span class="tag">口语表达</span></div>
+            <div class="card-hint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg> 独立线程 · 随时可开启</div>
+          </div>
+        </div>
+        <div class="node is-locked">
+          <div class="node-dot locked"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg></div>
+          <div class="node-card">
+            <span class="status s-locked">Open to Build</span>
+            <h3>一人公司大师</h3>
+            <div class="card-sub">自动化 · 变现 · 规模化</div>
+            <p class="card-desc">终极融合——将所有知识库能力打通，构建自动化商业闭环。从内容到产品到变现的一人帝国。</p>
+            <div class="tags"><span class="tag">自动化</span><span class="tag">变现模型</span><span class="tag">系统思维</span></div>
+            <div class="card-hint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg> 终极成就：知识帝国的完成形态</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-deco right">
+      <svg class="side-lines anim-drift" viewBox="0 0 160 120" style="animation-delay:2s">
+        <path class="deco-line anim-draw" d="M140,110 C100,70 80,90 40,40 S20,20 10,10" stroke="var(--track-ultimate)" stroke-dasharray="200" style="animation-delay:.6s"/>
+        <circle class="deco-circle" cx="40" cy="40" r="18" stroke="var(--track-ultimate-mid)"/>
+        <circle class="deco-circle" cx="40" cy="40" r="8" stroke="var(--track-ultimate)"/>
+        <circle class="deco-dot anim-float" cx="40" cy="40" r="3" fill="var(--track-ultimate)"/>
+      </svg>
+      <div class="side-quote">Build the life you don't need a vacation from.</div>
+      <div class="side-stat"><span class="big">12</span><span class="tiny">Total Libraries</span></div>
+    </div>
+  </div>
+</section>
+
+<div class="track-divider"><hr></div>
+
+<!-- ===== CRAFT: Skills Showcase ===== -->
+<section class="craft">
+  <!-- Side decorations -->
+  <svg class="craft-deco-left side-lines anim-drift" viewBox="0 0 60 200" width="60" height="200" style="opacity:0.15">
+    <path d="M30,10 Q10,50 30,100 T30,190" fill="none" stroke="var(--track-career)" stroke-width="1.5" stroke-dasharray="4 6" class="anim-draw"/>
+    <circle cx="30" cy="100" r="4" fill="var(--track-career)" class="anim-float"/>
+    <circle cx="30" cy="10" r="2" fill="var(--track-career)" class="anim-float-delay"/>
+  </svg>
+  <svg class="craft-deco-right side-lines anim-drift" viewBox="0 0 60 200" width="60" height="200" style="opacity:0.15;animation-delay:2s">
+    <path d="M30,190 Q50,150 30,100 T30,10" fill="none" stroke="var(--track-growth)" stroke-width="1.5" stroke-dasharray="4 6" class="anim-draw" style="animation-delay:1s"/>
+    <circle cx="30" cy="100" r="4" fill="var(--track-growth)" class="anim-float-delay"/>
+  </svg>
+
+  <div class="craft-header">
+    <div class="craft-eyebrow">Open Source Craft</div>
+    <h2 class="craft-title">Skills I <em>Built</em></h2>
+    <p class="craft-desc">亲手打造的 AI 工具——从想法到产品到发布，每一个 Skill 都是知识体系的延伸。</p>
+  </div>
+
+  <div class="craft-grid">
+    <!-- Skill 1: 10min-domain-expert -->
+    <div class="skill-card">
+      <div class="skill-top">
+        <div class="skill-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"/><path d="M8 7h6"/><path d="M8 11h8"/></svg>
+        </div>
+        <div class="skill-meta">
+          <div class="skill-name">10min Domain Expert</div>
+          <div class="skill-author">by orionxzhang</div>
+        </div>
+        <span class="skill-badge">Published</span>
+      </div>
+      <p class="skill-desc">输入任何领域名称，10 分钟内自动生成一部带密码保护、深浅色切换、全局搜索的交互式 HTML 知识词典。已发布至 GitHub + Knot Skills 市场。</p>
+      <div class="skill-tags">
+        <span class="tag">知识库生成</span>
+        <span class="tag">单文件 HTML</span>
+        <span class="tag">密码保护</span>
+        <span class="tag">深浅色切换</span>
+      </div>
+      <div class="skill-links">
+        <a class="skill-link" href="https://github.com/oriri-101/10min-domain-expert" target="_blank">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+          GitHub
+        </a>
+        <a class="skill-link" href="https://knot.woa.com/activity-work-list?my_works=1&action=detail&id=3290" target="_blank">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+          Knot Skills
+        </a>
+      </div>
+    </div>
+
+    <!-- Placeholder: Next Skill -->
+    <div class="skill-card" style="border-style:dashed;opacity:0.5">
+      <div class="skill-top">
+        <div class="skill-icon" style="background:var(--bg);border:2px dashed var(--fg-faint);color:var(--fg3)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        </div>
+        <div class="skill-meta">
+          <div class="skill-name">Next Skill</div>
+          <div class="skill-author">coming soon</div>
+        </div>
+      </div>
+      <p class="skill-desc" style="color:var(--fg3)">下一个将从你的知识体系中诞生的 AI 工具。每一个 Skill 都是认知的产品化——从学到做到教的闭环。</p>
+      <div class="skill-tags">
+        <span class="tag">???</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Stats -->
+<div class="stats-row">
+  <div class="stat-item"><div class="stat-num" style="color:var(--track-growth)">4</div><div class="stat-label">Live</div></div>
+  <div class="stat-item"><div class="stat-num" style="color:var(--track-career)">2</div><div class="stat-label">Planned</div></div>
+  <div class="stat-item"><div class="stat-num" style="color:var(--track-influence)">6</div><div class="stat-label">Open</div></div>
+  <div class="stat-item"><div class="stat-num" style="color:var(--track-ultimate)">4</div><div class="stat-label">Tracks</div></div>
+</div>
+
+<section class="vision">
+  <h2>Not waiting for the wind,<br>but <strong>becoming it</strong>.</h2>
+  <p>十二座知识库全部点亮之时，你将拥有从认知到执行的完整闭环。每一步蜿蜒前行，都是在为终局蓄力。</p>
+</section>
+
+<footer class="site-footer">Young Atlas v5.0 · Built with Vela</footer>
+
+<script>
+function toggleTheme(){const h=document.documentElement;const n=h.getAttribute('data-theme')==='dark'?'light':'dark';h.setAttribute('data-theme',n);localStorage.setItem('ya-theme',n);updateIcon(n)}
+function updateIcon(t){document.querySelector('.ico-sun').style.display=t==='dark'?'none':'block';document.querySelector('.ico-moon').style.display=t==='dark'?'block':'none'}
+(function(){const s=localStorage.getItem('ya-theme');if(s){document.documentElement.setAttribute('data-theme',s);updateIcon(s)}})();
+</script>
+</body>
+</html>
