@@ -244,8 +244,83 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--fg);line-heig
 
 .site-footer{text-align:center;padding:32px;font-size:11px;color:var(--fg3);font-weight:300;letter-spacing:0.5px}
 
+/* ========== TOC — Fixed Left Navigator ========== */
+.toc-nav{
+  position:fixed;left:28px;top:50%;transform:translateY(-50%);
+  z-index:100;display:flex;flex-direction:column;align-items:flex-start;
+  gap:0;pointer-events:none;
+}
+.toc-track{
+  position:relative;display:flex;flex-direction:column;
+  align-items:flex-start;pointer-events:all;
+}
+/* 竖线连接 */
+.toc-track::before{
+  content:'';position:absolute;left:7px;top:16px;bottom:16px;width:1px;
+  background:linear-gradient(180deg,var(--toc-color,var(--fg-faint)) 0%,transparent 100%);
+  opacity:0.35;
+}
+.toc-item{
+  display:flex;align-items:center;gap:10px;
+  padding:5px 0;cursor:pointer;
+  text-decoration:none;transition:all .25s;
+  position:relative;
+}
+.toc-dot{
+  width:15px;height:15px;border-radius:50%;flex-shrink:0;
+  border:1.5px solid var(--toc-color,var(--fg-faint));
+  background:var(--bg);transition:all .3s cubic-bezier(.4,0,.2,1);
+  position:relative;z-index:1;
+}
+.toc-dot::after{
+  content:'';position:absolute;inset:3px;border-radius:50%;
+  background:var(--toc-color,var(--fg-faint));
+  opacity:0;transform:scale(0);transition:all .3s cubic-bezier(.4,0,.2,1);
+}
+.toc-label{
+  font-family:var(--font-display);font-size:10px;font-weight:600;
+  letter-spacing:1.2px;text-transform:uppercase;
+  color:var(--fg3);white-space:nowrap;
+  opacity:0;transform:translateX(-6px);
+  transition:all .25s cubic-bezier(.4,0,.2,1);
+  pointer-events:none;
+}
+/* Hover：展开 label */
+.toc-item:hover .toc-label{opacity:0.85;transform:translateX(0)}
+.toc-item:hover .toc-dot{transform:scale(1.2);border-color:var(--toc-color)}
+/* Active：高亮 dot + 常驻 label */
+.toc-item.active .toc-dot{
+  background:var(--toc-color,var(--fg3));
+  border-color:var(--toc-color,var(--fg3));
+  transform:scale(1.3);
+  box-shadow:0 0 0 4px color-mix(in srgb,var(--toc-color) 18%,transparent);
+}
+.toc-item.active .toc-dot::after{opacity:0}
+.toc-item.active .toc-label{opacity:1;transform:translateX(0);color:var(--toc-color,var(--fg2))}
+/* 赛道色 */
+.toc-track--growth{--toc-color:var(--track-growth)}
+.toc-track--career{--toc-color:var(--track-career)}
+.toc-track--influence{--toc-color:var(--track-influence)}
+.toc-track--ultimate{--toc-color:var(--track-ultimate)}
+.toc-track--craft{--toc-color:var(--track-career)}
+/* 装饰性 SVG 标注 */
+.toc-deco{
+  position:absolute;left:-22px;top:50%;transform:translateY(-50%);
+  pointer-events:none;opacity:0.18;
+}
+/* 小间隔分组 */
+.toc-spacer{height:10px}
+/* 顶部小标题 */
+.toc-logo{
+  font-family:var(--font-display);font-size:9px;font-weight:700;
+  letter-spacing:2.5px;text-transform:uppercase;color:var(--fg3);
+  padding:0 0 12px 2px;opacity:0.45;pointer-events:none;
+  writing-mode:horizontal-tb;
+}
+
 /* ========== Responsive ========== */
 @media(max-width:900px){
+  .toc-nav{display:none}
   .track-inner{grid-template-columns:1fr;padding:0 24px}
   .side-deco{display:none}
   .track-head,.nodes-col{grid-column:1}
@@ -275,6 +350,64 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--fg);line-heig
 </head>
 <body>
 
+<!-- ===== TOC: Fixed Left Navigator ===== -->
+<nav class="toc-nav" aria-label="Page Navigation">
+  <div class="toc-logo">Young</div>
+
+  <!-- Track 1 -->
+  <div class="toc-track toc-track--growth">
+    <a class="toc-item" href="#track-growth">
+      <div class="toc-dot"></div>
+      <span class="toc-label">成长基石</span>
+    </a>
+  </div>
+
+  <div class="toc-spacer"></div>
+
+  <!-- Track 2 -->
+  <div class="toc-track toc-track--career">
+    <a class="toc-item" href="#track-career">
+      <div class="toc-dot"></div>
+      <span class="toc-label">职业加速</span>
+    </a>
+  </div>
+
+  <div class="toc-spacer"></div>
+
+  <!-- Track 3 -->
+  <div class="toc-track toc-track--influence">
+    <a class="toc-item" href="#track-influence">
+      <div class="toc-dot"></div>
+      <span class="toc-label">影响力</span>
+    </a>
+  </div>
+
+  <div class="toc-spacer"></div>
+
+  <!-- Track 4 -->
+  <div class="toc-track toc-track--ultimate">
+    <a class="toc-item" href="#track-ultimate">
+      <div class="toc-dot"></div>
+      <span class="toc-label">终极形态</span>
+    </a>
+  </div>
+
+  <div class="toc-spacer"></div>
+
+  <!-- Craft -->
+  <div class="toc-track toc-track--craft">
+    <a class="toc-item" href="#craft">
+      <div class="toc-dot" style="border-radius:4px;"></div>
+      <span class="toc-label">Craft</span>
+    </a>
+  </div>
+
+  <!-- 装饰性曲线 SVG -->
+  <svg class="toc-deco" viewBox="0 0 20 220" width="20" height="220" style="left:-18px;top:10px;opacity:0.12">
+    <path d="M10,0 Q2,55 10,110 Q18,165 10,220" fill="none" stroke="var(--fg3)" stroke-width="1" stroke-dasharray="3 5"/>
+  </svg>
+</nav>
+
 <header class="site-header">
   <div class="logo">Young <span>Atlas</span></div>
   <div class="header-actions">
@@ -294,7 +427,7 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--fg);line-heig
 </section>
 
 <!-- ===== TRACK 1: 成长基石 ===== -->
-<section class="track track--growth">
+<section id="track-growth" class="track track--growth">
   <div class="track-inner">
     <div class="side-deco left">
       <svg class="side-lines anim-drift" viewBox="0 0 160 120">
@@ -380,7 +513,7 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--fg);line-heig
 <div class="track-divider"><hr></div>
 
 <!-- ===== TRACK 2: 职业加速 ===== -->
-<section class="track track--career">
+<section id="track-career" class="track track--career">
   <div class="track-inner">
     <div class="side-deco left">
       <svg class="side-lines anim-drift" viewBox="0 0 160 120">
@@ -442,7 +575,7 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--fg);line-heig
 <div class="track-divider"><hr></div>
 
 <!-- ===== TRACK 3: 影响力 ===== -->
-<section class="track track--influence">
+<section id="track-influence" class="track track--influence">
   <div class="track-inner">
     <div class="side-deco left">
       <svg class="side-lines anim-drift" viewBox="0 0 160 120">
@@ -515,7 +648,7 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--fg);line-heig
 <div class="track-divider"><hr></div>
 
 <!-- ===== TRACK 4: 终极形态 ===== -->
-<section class="track track--ultimate">
+<section id="track-ultimate" class="track track--ultimate">
   <div class="track-inner">
     <div class="side-deco left">
       <div class="side-quote">Freedom is not given. It is taken — one skill at a time.</div>
@@ -588,7 +721,7 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--fg);line-heig
 <div class="track-divider"><hr></div>
 
 <!-- ===== CRAFT: Skills Showcase ===== -->
-<section class="craft">
+<section id="craft" class="craft">
   <!-- Side decorations -->
   <svg class="craft-deco-left side-lines anim-drift" viewBox="0 0 60 200" width="60" height="200" style="opacity:0.15">
     <path d="M30,10 Q10,50 30,100 T30,190" fill="none" stroke="var(--track-career)" stroke-width="1.5" stroke-dasharray="4 6" class="anim-draw"/>
@@ -707,6 +840,46 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--fg);line-heig
 function toggleTheme(){const h=document.documentElement;const n=h.getAttribute('data-theme')==='dark'?'light':'dark';h.setAttribute('data-theme',n);localStorage.setItem('ya-theme',n);updateIcon(n)}
 function updateIcon(t){document.querySelector('.ico-sun').style.display=t==='dark'?'none':'block';document.querySelector('.ico-moon').style.display=t==='dark'?'block':'none'}
 (function(){const s=localStorage.getItem('ya-theme');if(s){document.documentElement.setAttribute('data-theme',s);updateIcon(s)}})();
+</script>
+
+<script>
+// ===== TOC Scroll Spy =====
+(function(){
+  const sections = [
+    {id:'track-growth',   link:'[href="#track-growth"]'},
+    {id:'track-career',   link:'[href="#track-career"]'},
+    {id:'track-influence',link:'[href="#track-influence"]'},
+    {id:'track-ultimate', link:'[href="#track-ultimate"]'},
+    {id:'craft',          link:'[href="#craft"]'},
+  ];
+
+  const items = sections.map(s => ({
+    el: document.getElementById(s.id),
+    link: document.querySelector('.toc-nav ' + s.link)
+  })).filter(s => s.el && s.link);
+
+  function onScroll(){
+    const mid = window.scrollY + window.innerHeight * 0.45;
+    let active = items[0];
+    for(const item of items){
+      if(item.el.offsetTop <= mid) active = item;
+    }
+    items.forEach(i => i.link.closest('.toc-item').classList.remove('active'));
+    if(active) active.link.closest('.toc-item').classList.add('active');
+  }
+
+  window.addEventListener('scroll', onScroll, {passive:true});
+  onScroll();
+
+  // 平滑滚动
+  document.querySelectorAll('.toc-nav a').forEach(a => {
+    a.addEventListener('click', e => {
+      e.preventDefault();
+      const target = document.querySelector(a.getAttribute('href'));
+      if(target) target.scrollIntoView({behavior:'smooth', block:'start'});
+    });
+  });
+})();
 </script>
 </body>
 </html>
