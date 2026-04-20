@@ -59,7 +59,7 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--fg);line-heig
 .hero p{font-size:15px;color:var(--fg2);line-height:1.9;font-weight:300;max-width:500px;margin:0 auto}
 .hero-progress{max-width:360px;margin:28px auto 0;display:flex;align-items:center;gap:12px}
 .hero-progress .bar-track{flex:1;height:4px;border-radius:2px;background:var(--fg-faint);overflow:hidden}
-.hero-progress .bar-fill{height:100%;border-radius:2px;background:linear-gradient(90deg,var(--track-growth),var(--track-career));width:33%;transition:width .8s ease}
+.hero-progress .bar-fill{height:100%;border-radius:2px;background:linear-gradient(90deg,var(--track-growth),var(--track-career));width:42%;transition:width .8s ease}
 .hero-progress .bar-label{font-size:12px;font-weight:600;color:var(--fg2);white-space:nowrap;font-variant-numeric:tabular-nums}
 
 /* ========== Track Section ========== */
@@ -411,7 +411,7 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--fg);line-heig
 <header class="site-header">
   <div class="logo">Young <span>Atlas</span></div>
   <div class="header-actions">
-    <div class="progress-pill"><span class="dot"></span><strong>4</strong> / 12 unlocked</div>
+    <div class="progress-pill"><span class="dot"></span><strong>5</strong> / 12 unlocked</div>
     <button class="theme-btn" onclick="toggleTheme()" aria-label="Toggle theme">
       <svg class="ico-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
       <svg class="ico-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="display:none"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
@@ -423,7 +423,7 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--fg);line-heig
   <div class="hero-eyebrow">Personal Knowledge System</div>
   <h1>The Map Is Not<br>the <em>Territory</em></h1>
   <p>每一座知识库都是认知版图上的恒星。不必按顺序，选择你当下最需要的方向，点亮属于你的星图。</p>
-  <div class="hero-progress"><div class="bar-track"><div class="bar-fill"></div></div><span class="bar-label">33% explored</span></div>
+  <div class="hero-progress"><div class="bar-track"><div class="bar-fill"></div></div><span class="bar-label">42% explored</span></div>
 </section>
 
 <!-- ===== TRACK 1: 成长基石 ===== -->
@@ -437,7 +437,7 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--fg);line-heig
         <circle class="deco-dot anim-float-delay" cx="150" cy="20" r="3" fill="var(--track-growth)"/>
       </svg>
       <div class="side-quote">The beginning is always today.</div>
-      <div class="side-stat"><span class="big">4</span><span class="tiny">Libraries Live</span></div>
+      <div class="side-stat"><span class="big">5</span><span class="tiny">Libraries Live</span></div>
     </div>
 
     <div class="nodes-col">
@@ -492,6 +492,18 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--fg);line-heig
             <p class="card-desc">从资产配置到基金分析，从宏观经济到个股研判。系统化金融知识体系，支撑每一个投资决策。</p>
             <div class="tags"><span class="tag">资产配置</span><span class="tag">基金分析</span><span class="tag">风险管理</span></div>
             <a class="card-link" href="https://oriri-101.github.io/financial-literacy-glossary/" target="_blank">进入知识库 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+          </div>
+        </div>
+        <!-- Node 5: 终端命令大师 -->
+        <div class="node">
+          <div class="node-dot live"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg></div>
+          <div class="node-card">
+            <span class="status s-live">Live</span>
+            <h3>终端命令大师</h3>
+            <div class="card-sub">CLI 效率 · 工程思维</div>
+            <p class="card-desc">从 Shell 基础到高级工作流，覆盖 macOS/Linux 核心命令体系。文件操作、进程管理、网络诊断、Git 流程、自动化脚本，让终端成为你的第二双手。</p>
+            <div class="tags"><span class="tag">Shell</span><span class="tag">文件系统</span><span class="tag">自动化</span><span class="tag">网络工具</span></div>
+            <a class="card-link" href="https://oriri-101.github.io/ui-design-glossary/terminal-learning-report.html" target="_blank">进入知识库 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
           </div>
         </div>
       </div>
@@ -854,7 +866,7 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--fg);line-heig
 
 <!-- Stats -->
 <div class="stats-row">
-  <div class="stat-item"><div class="stat-num" style="color:var(--track-growth)">4</div><div class="stat-label">Live</div></div>
+  <div class="stat-item"><div class="stat-num" style="color:var(--track-growth)">5</div><div class="stat-label">Live</div></div>
   <div class="stat-item"><div class="stat-num" style="color:var(--track-career)">2</div><div class="stat-label">Planned</div></div>
   <div class="stat-item"><div class="stat-num" style="color:var(--track-influence)">6</div><div class="stat-label">Open</div></div>
   <div class="stat-item"><div class="stat-num" style="color:var(--track-ultimate)">4</div><div class="stat-label">Tracks</div></div>
