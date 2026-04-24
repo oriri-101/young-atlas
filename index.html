@@ -59,7 +59,7 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--fg);line-heig
 .hero p{font-size:15px;color:var(--fg2);line-height:1.9;font-weight:300;max-width:500px;margin:0 auto}
 .hero-progress{max-width:360px;margin:28px auto 0;display:flex;align-items:center;gap:12px}
 .hero-progress .bar-track{flex:1;height:4px;border-radius:2px;background:var(--fg-faint);overflow:hidden}
-.hero-progress .bar-fill{height:100%;border-radius:2px;background:linear-gradient(90deg,var(--track-growth),var(--track-career));width:42%;transition:width .8s ease}
+.hero-progress .bar-fill{height:100%;border-radius:2px;background:linear-gradient(90deg,var(--track-growth),var(--track-career));width:38%;transition:width .8s ease}
 .hero-progress .bar-label{font-size:12px;font-weight:600;color:var(--fg2);white-space:nowrap;font-variant-numeric:tabular-nums}
 
 /* ========== Track Section ========== */
@@ -411,7 +411,7 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--fg);line-heig
 <header class="site-header">
   <div class="logo">Young <span>Atlas</span></div>
   <div class="header-actions">
-    <div class="progress-pill"><span class="dot"></span><strong>5</strong> / 12 unlocked</div>
+    <div class="progress-pill"><span class="dot"></span><strong>5</strong> / 13 unlocked</div>
     <button class="theme-btn" onclick="toggleTheme()" aria-label="Toggle theme">
       <svg class="ico-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
       <svg class="ico-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="display:none"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
@@ -423,7 +423,7 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--fg);line-heig
   <div class="hero-eyebrow">Personal Knowledge System</div>
   <h1>The Map Is Not<br>the <em>Territory</em></h1>
   <p>每一座知识库都是认知版图上的恒星。不必按顺序，选择你当下最需要的方向，点亮属于你的星图。</p>
-  <div class="hero-progress"><div class="bar-track"><div class="bar-fill"></div></div><span class="bar-label">42% explored</span></div>
+  <div class="hero-progress"><div class="bar-track"><div class="bar-fill" style="width:38%"></div></div><span class="bar-label">38% explored</span></div>
 </section>
 
 <!-- ===== TRACK 1: 成长基石 ===== -->
@@ -446,8 +446,8 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--fg);line-heig
         <span class="track-name">成长基石</span>
         <span class="track-sub">核心认知已建立</span>
       </div>
-      <svg class="path-svg" viewBox="0 0 640 580" preserveAspectRatio="none">
-        <path class="path-line" d="M60,40 C180,30 140,140 300,150 S500,60 520,200 S340,300 380,400 S500,480 480,540"/>
+      <svg class="path-svg" viewBox="0 0 640 720" preserveAspectRatio="none">
+        <path class="path-line" d="M60,40 C180,30 140,140 300,150 S500,60 520,200 S340,300 380,400 S500,480 480,540 S320,600 360,680"/>
       </svg>
       <div class="nodes">
         <div class="node">
@@ -494,15 +494,14 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--fg);line-heig
             <a class="card-link" href="https://oriri-101.github.io/financial-literacy-glossary/" target="_blank">进入知识库 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
           </div>
         </div>
-        <!-- Node 5: 终端命令大师 -->
         <div class="node">
           <div class="node-dot live"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg></div>
           <div class="node-card">
             <span class="status s-live">Live</span>
-            <h3>终端命令大师</h3>
-            <div class="card-sub">CLI 效率 · 工程思维</div>
-            <p class="card-desc">从 Shell 基础到高级工作流，覆盖 macOS/Linux 核心命令体系。文件操作、进程管理、网络诊断、Git 流程、自动化脚本，让终端成为你的第二双手。</p>
-            <div class="tags"><span class="tag">Shell</span><span class="tag">文件系统</span><span class="tag">自动化</span><span class="tag">网络工具</span></div>
+            <h3>终端命令完全指南</h3>
+            <div class="card-sub">CLI 掌控力 · 效率跃迁</div>
+            <p class="card-desc">从文件系统到网络诊断，从 Git 工作流到包管理——系统化终端命令知识体系，让命令行成为你的超级武器。</p>
+            <div class="tags"><span class="tag">命令行</span><span class="tag">Shell</span><span class="tag">Git</span><span class="tag">效率工具</span></div>
             <a class="card-link" href="https://oriri-101.github.io/ui-design-glossary/terminal-learning-report.html" target="_blank">进入知识库 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
           </div>
         </div>
@@ -725,7 +724,7 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--fg);line-heig
         <circle class="deco-dot anim-float" cx="40" cy="40" r="3" fill="var(--track-ultimate)"/>
       </svg>
       <div class="side-quote">Build the life you don't need a vacation from.</div>
-      <div class="side-stat"><span class="big">12</span><span class="tiny">Total Libraries</span></div>
+      <div class="side-stat"><span class="big">13</span><span class="tiny">Total Libraries</span></div>
     </div>
   </div>
 </section>
@@ -874,10 +873,10 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--fg);line-heig
 
 <section class="vision">
   <h2>Not waiting for the wind,<br>but <strong>becoming it</strong>.</h2>
-  <p>十二座知识库全部点亮之时，你将拥有从认知到执行的完整闭环。每一步蜿蜒前行，都是在为终局蓄力。</p>
+  <p>十三座知识库全部点亮之时，你将拥有从认知到执行的完整闭环。每一步蜿蜒前行，都是在为终局蓄力。</p>
 </section>
 
-<footer class="site-footer">Young Atlas v5.0 · Built with Vela</footer>
+<footer class="site-footer">Young Atlas v5.1 · Built with Vela · Updated 2026-04-24</footer>
 
 <script>
 function toggleTheme(){const h=document.documentElement;const n=h.getAttribute('data-theme')==='dark'?'light':'dark';h.setAttribute('data-theme',n);localStorage.setItem('ya-theme',n);updateIcon(n)}
