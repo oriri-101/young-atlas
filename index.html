@@ -22,6 +22,7 @@
   --track-career:#B8926A;--track-career-light:#F3ECE3;--track-career-mid:#D4BFA8;
   --track-influence:#8E7BAF;--track-influence-light:#EDE8F4;--track-influence-mid:#C4B8D6;
   --track-ultimate:#C4866B;--track-ultimate-light:#F4E8E2;--track-ultimate-mid:#DDB8A6;
+  --track-product:#5B8DB8;--track-product-light:#E6EFF7;--track-product-mid:#A8C4DC;
 
   --font-display:'SF Pro Display',-apple-system,'PingFang SC','Noto Sans SC',sans-serif;
   --font-body:'SF Pro Text',-apple-system,'PingFang SC','Noto Sans SC',sans-serif;
@@ -36,6 +37,7 @@
   --track-career:#C9A67A;--track-career-light:rgba(201,166,122,0.1);--track-career-mid:rgba(201,166,122,0.2);
   --track-influence:#A48EC4;--track-influence-light:rgba(164,142,196,0.1);--track-influence-mid:rgba(164,142,196,0.2);
   --track-ultimate:#D49A7E;--track-ultimate-light:rgba(212,154,126,0.1);--track-ultimate-mid:rgba(212,154,126,0.2);
+  --track-product:#7AAFD4;--track-product-light:rgba(122,175,212,0.1);--track-product-mid:rgba(122,175,212,0.2);
 }
 body{font-family:var(--font-body);background:var(--bg);color:var(--fg);line-height:1.8;-webkit-font-smoothing:antialiased;transition:background .4s,color .4s;overflow-x:hidden}
 
@@ -114,6 +116,9 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--fg);line-heig
 .track--ultimate .track-label{background:var(--track-ultimate-light);color:var(--track-ultimate)}
 .track--ultimate .track-name{color:var(--track-ultimate)}
 .track--ultimate .side-stat .big{color:var(--track-ultimate)}
+.track--product .track-label{background:var(--track-product-light);color:var(--track-product)}
+.track--product .track-name{color:var(--track-product)}
+.track--product .side-stat .big{color:var(--track-product)}
 
 /* ========== Path SVG ========== */
 .path-svg{position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0}
@@ -122,6 +127,7 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--fg);line-heig
 .track--career .path-line{stroke:var(--track-career)}
 .track--influence .path-line{stroke:var(--track-influence)}
 .track--ultimate .path-line{stroke:var(--track-ultimate)}
+.track--product .path-line{stroke:var(--track-product)}
 
 /* ========== Nodes ========== */
 .nodes{display:flex;flex-direction:column;gap:20px;position:relative;z-index:1}
@@ -162,6 +168,7 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--fg);line-heig
 .track--career .card-sub{color:var(--track-career)}.track--career .card-link{color:var(--track-career)}
 .track--influence .card-sub{color:var(--track-influence)}.track--influence .card-link{color:var(--track-influence)}
 .track--ultimate .card-sub{color:var(--track-ultimate)}.track--ultimate .card-link{color:var(--track-ultimate)}
+.track--product .card-sub{color:var(--track-product)}.track--product .card-link{color:var(--track-product)}
 
 .node.is-locked .node-card{opacity:0.5}
 .node.is-locked:hover .node-card{opacity:0.7;box-shadow:var(--shadow-sm);transform:translateY(-1px)}
@@ -281,14 +288,13 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--fg);line-heig
   font-family:var(--font-display);font-size:10px;font-weight:600;
   letter-spacing:1.2px;text-transform:uppercase;
   color:var(--fg3);white-space:nowrap;
-  opacity:0;transform:translateX(-6px);
+  opacity:0.55;transform:translateX(0);
   transition:all .25s cubic-bezier(.4,0,.2,1);
   pointer-events:none;
 }
 /* Hover：展开 label */
 .toc-item:hover .toc-label{opacity:0.85;transform:translateX(0)}
-.toc-item:hover .toc-dot{transform:scale(1.2);border-color:var(--toc-color)}
-/* Active：高亮 dot + 常驻 label */
+.toc-item:hover .toc-dot{transform:scale(1.2);border-color:var(--toc-color)}/* Active：高亮 dot + label 加色 */
 .toc-item.active .toc-dot{
   background:var(--toc-color,var(--fg3));
   border-color:var(--toc-color,var(--fg3));
@@ -303,6 +309,7 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--fg);line-heig
 .toc-track--influence{--toc-color:var(--track-influence)}
 .toc-track--ultimate{--toc-color:var(--track-ultimate)}
 .toc-track--craft{--toc-color:var(--track-career)}
+.toc-track--product{--toc-color:var(--track-product)}
 /* 装饰性 SVG 标注 */
 .toc-deco{
   position:absolute;left:-22px;top:50%;transform:translateY(-50%);
@@ -399,6 +406,16 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--fg);line-heig
     <a class="toc-item" href="#craft">
       <div class="toc-dot" style="border-radius:4px;"></div>
       <span class="toc-label">Craft</span>
+    </a>
+  </div>
+
+  <div class="toc-spacer"></div>
+
+  <!-- Product -->
+  <div class="toc-track toc-track--product">
+    <a class="toc-item" href="#product">
+      <div class="toc-dot" style="border-radius:4px;"></div>
+      <span class="toc-label">产品实现</span>
     </a>
   </div>
 
@@ -863,6 +880,91 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--fg);line-heig
   </div>
 </section>
 
+<div class="track-divider"><hr></div>
+
+<!-- ===== PRODUCT: 产品实现 ===== -->
+<section id="product" class="track track--product">
+  <div class="track-inner">
+    <div class="side-deco left">
+      <svg class="side-lines anim-drift" viewBox="0 0 160 120">
+        <path class="deco-line anim-draw" d="M20,20 C60,10 100,60 140,50 S160,90 120,110" stroke="var(--track-product)" stroke-dasharray="200"/>
+        <circle class="deco-circle" cx="100" cy="60" r="10" stroke="var(--track-product-mid)"/>
+        <circle class="deco-dot anim-float" cx="20" cy="20" r="3" fill="var(--track-product)"/>
+        <circle class="deco-dot anim-float-delay" cx="120" cy="110" r="3" fill="var(--track-product)"/>
+      </svg>
+      <div class="side-quote">Ideas only count when shipped.</div>
+      <div class="side-stat"><span class="big">1</span><span class="tiny">Products Live</span></div>
+    </div>
+
+    <div class="nodes-col">
+      <div class="track-head">
+        <span class="track-label">Products</span>
+        <span class="track-name">产品实现</span>
+        <span class="track-sub">从想法到落地的完整产品</span>
+      </div>
+      <svg class="path-svg" viewBox="0 0 640 260" preserveAspectRatio="none">
+        <path class="path-line" d="M60,40 C200,30 160,130 340,120 S540,50 560,180"/>
+      </svg>
+      <div class="nodes">
+        <!-- Product 1: 520 IP 监控操作手册 -->
+        <div class="node">
+          <div class="node-dot live">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="2" y="3" width="20" height="14" rx="2"/>
+              <path d="M8 21h8M12 17v4"/>
+              <path d="M7 8h.01M11 8h6M7 12h10"/>
+            </svg>
+          </div>
+          <div class="node-card">
+            <span class="status s-live">Live</span>
+            <h3>520 IP 监控 · 操作手册</h3>
+            <div class="card-sub">监播平台 · 后台运维 · 数据上传</div>
+            <p class="card-desc">520《爱在此刻》IP 热度监播平台的完整后台运维手册——从 CVM 服务部署、每日数据上传脚本，到异常排查、切片修复的全流程指引。适合独立维护的技术运营同学。</p>
+            <div class="tags">
+              <span class="tag">数据监播</span>
+              <span class="tag">CVM 运维</span>
+              <span class="tag">热度分析</span>
+              <span class="tag">Shell 脚本</span>
+            </div>
+            <a class="card-link" href="https://oriri-101.github.io/ip-monitor-manual/" target="_blank">
+              查看操作手册
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- Placeholder -->
+        <div class="node is-locked">
+          <div class="node-dot locked">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          </div>
+          <div class="node-card">
+            <span class="status s-locked">Coming Soon</span>
+            <h3>下一个产品</h3>
+            <div class="card-sub">待解锁 · 正在构建中</div>
+            <p class="card-desc">每一个产品都是知识体系的实战验证——从需求到设计到上线，记录完整的产品化过程。</p>
+            <div class="tags"><span class="tag">???</span></div>
+            <div class="card-hint">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              持续更新中
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-deco right">
+      <div class="side-quote">Build in public. Learn in public.</div>
+      <svg class="side-lines anim-drift" viewBox="0 0 160 120" style="animation-delay:1.5s">
+        <path class="deco-line anim-draw" d="M140,110 C100,80 110,50 70,40 S20,60 10,20" stroke="var(--track-product)" stroke-dasharray="200" style="animation-delay:.7s"/>
+        <circle class="deco-circle" cx="70" cy="40" r="12" stroke="var(--track-product-mid)"/>
+        <circle class="deco-dot anim-float" cx="10" cy="20" r="2.5" fill="var(--track-product)"/>
+      </svg>
+      <div class="side-stat"><span class="big">∞</span><span class="tiny">To Ship</span></div>
+    </div>
+  </div>
+</section>
+
 <!-- Stats -->
 <div class="stats-row">
   <div class="stat-item"><div class="stat-num" style="color:var(--track-growth)">5</div><div class="stat-label">Live</div></div>
@@ -876,7 +978,7 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--fg);line-heig
   <p>十三座知识库全部点亮之时，你将拥有从认知到执行的完整闭环。每一步蜿蜒前行，都是在为终局蓄力。</p>
 </section>
 
-<footer class="site-footer">Young Atlas v5.1 · Built with Vela · Updated 2026-04-24</footer>
+<footer class="site-footer">Young Atlas v5.2 · Built with Vela · Updated 2026-05-07</footer>
 
 <script>
 function toggleTheme(){const h=document.documentElement;const n=h.getAttribute('data-theme')==='dark'?'light':'dark';h.setAttribute('data-theme',n);localStorage.setItem('ya-theme',n);updateIcon(n)}
@@ -893,6 +995,7 @@ function updateIcon(t){document.querySelector('.ico-sun').style.display=t==='dar
     {id:'track-influence',link:'[href="#track-influence"]'},
     {id:'track-ultimate', link:'[href="#track-ultimate"]'},
     {id:'craft',          link:'[href="#craft"]'},
+    {id:'product',        link:'[href="#product"]'},
   ];
 
   const items = sections.map(s => ({
