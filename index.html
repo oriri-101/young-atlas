@@ -23,6 +23,7 @@
   --track-influence:#8E7BAF;--track-influence-light:#EDE8F4;--track-influence-mid:#C4B8D6;
   --track-ultimate:#C4866B;--track-ultimate-light:#F4E8E2;--track-ultimate-mid:#DDB8A6;
   --track-product:#5B8DB8;--track-product-light:#E6EFF7;--track-product-mid:#A8C4DC;
+  --track-feed:#5C8C7A;--track-feed-light:#E8F1ED;--track-feed-mid:#A6C5B6;
 
   --font-display:'SF Pro Display',-apple-system,'PingFang SC','Noto Sans SC',sans-serif;
   --font-body:'SF Pro Text',-apple-system,'PingFang SC','Noto Sans SC',sans-serif;
@@ -38,6 +39,7 @@
   --track-influence:#A48EC4;--track-influence-light:rgba(164,142,196,0.1);--track-influence-mid:rgba(164,142,196,0.2);
   --track-ultimate:#D49A7E;--track-ultimate-light:rgba(212,154,126,0.1);--track-ultimate-mid:rgba(212,154,126,0.2);
   --track-product:#7AAFD4;--track-product-light:rgba(122,175,212,0.1);--track-product-mid:rgba(122,175,212,0.2);
+  --track-feed:#7DBAA4;--track-feed-light:rgba(125,186,164,0.1);--track-feed-mid:rgba(125,186,164,0.2);
 }
 body{font-family:var(--font-body);background:var(--bg);color:var(--fg);line-height:1.8;-webkit-font-smoothing:antialiased;transition:background .4s,color .4s;overflow-x:hidden}
 
@@ -251,6 +253,107 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--fg);line-heig
 
 .site-footer{text-align:center;padding:32px;font-size:11px;color:var(--fg3);font-weight:300;letter-spacing:0.5px}
 
+/* ========== AI Feed — Daily Learning Stream ========== */
+.feed{max-width:1200px;margin:0 auto;padding:64px 40px 40px;position:relative}
+.feed-header{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:36px;gap:24px;flex-wrap:wrap;border-bottom:1px solid var(--border);padding-bottom:24px}
+.feed-header-left{display:flex;flex-direction:column;gap:6px}
+.feed-eyebrow{font-size:11px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--track-feed)}
+.feed-title{font-family:var(--font-serif);font-size:28px;font-weight:400;font-style:italic;letter-spacing:-0.3px;display:flex;align-items:center;gap:12px}
+.feed-title em{font-style:normal;font-weight:700;color:var(--track-feed)}
+.feed-title-mark{display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:8px;background:var(--track-feed-light);color:var(--track-feed)}
+.feed-title-mark svg{width:20px;height:20px}
+.feed-desc{font-size:13px;color:var(--fg2);font-weight:300;line-height:1.7;max-width:520px}
+.feed-stats{display:flex;gap:24px;align-items:center}
+.feed-stat{text-align:right}
+.feed-stat .num{font-family:var(--font-display);font-size:26px;font-weight:600;color:var(--track-feed);letter-spacing:-0.5px;line-height:1}
+.feed-stat .lab{font-size:10px;color:var(--fg3);text-transform:uppercase;letter-spacing:1.2px;font-weight:600;margin-top:4px}
+
+.feed-list{display:flex;flex-direction:column;gap:0}
+.feed-item{
+  display:grid;grid-template-columns:48px 1fr auto;gap:18px;align-items:center;
+  padding:18px 20px;border-radius:10px;
+  border:1px solid transparent;
+  transition:all .25s cubic-bezier(.4,0,.2,1);
+  text-decoration:none;color:inherit;
+  position:relative;
+}
+.feed-item + .feed-item{border-top:1px dashed var(--border)}
+.feed-item:hover{
+  background:var(--surface);
+  border-color:var(--track-feed-mid);
+  border-top-color:var(--track-feed-mid);
+  transform:translateX(4px);
+  box-shadow:0 4px 14px rgba(0,0,0,0.04);
+}
+.feed-item:hover + .feed-item{border-top-color:transparent}
+
+.feed-num{
+  font-family:var(--font-display);font-size:14px;font-weight:600;
+  color:var(--fg3);letter-spacing:1px;
+  display:flex;align-items:center;justify-content:center;
+  width:36px;height:36px;border-radius:50%;
+  background:var(--bg);border:1px dashed var(--border);
+  transition:all .25s;
+}
+.feed-item:hover .feed-num{
+  background:var(--track-feed-light);color:var(--track-feed);
+  border-style:solid;border-color:var(--track-feed-mid);
+}
+
+.feed-body{display:flex;flex-direction:column;gap:6px;min-width:0}
+.feed-name-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.feed-name{font-family:var(--font-display);font-size:15px;font-weight:600;letter-spacing:-0.2px;color:var(--fg)}
+.feed-tag{
+  font-size:10px;font-weight:600;letter-spacing:0.8px;
+  padding:2px 8px;border-radius:3px;
+  background:var(--track-feed-light);color:var(--track-feed);
+  text-transform:uppercase;
+}
+.feed-channel{
+  font-size:10px;font-weight:500;letter-spacing:0.4px;
+  padding:2px 8px;border-radius:3px;
+  background:var(--bg);color:var(--fg3);
+  border:1px solid var(--border);
+  display:inline-flex;align-items:center;gap:4px;
+}
+.feed-channel svg{width:9px;height:9px}
+.feed-link-text{
+  font-size:11px;color:var(--fg3);font-weight:300;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:520px;
+  font-family:var(--font-mono,'SF Mono',monospace);letter-spacing:0;
+}
+
+.feed-arrow{
+  display:flex;align-items:center;justify-content:center;
+  width:28px;height:28px;border-radius:50%;
+  color:var(--fg3);
+  transition:all .25s cubic-bezier(.4,0,.2,1);
+  flex-shrink:0;
+}
+.feed-arrow svg{width:14px;height:14px;transition:transform .25s}
+.feed-item:hover .feed-arrow{background:var(--track-feed);color:#fff}
+.feed-item:hover .feed-arrow svg{transform:translate(2px,-2px)}
+
+.feed-empty{
+  text-align:center;padding:36px 20px;
+  border:1px dashed var(--border);border-radius:10px;
+  color:var(--fg3);font-size:12px;font-weight:300;
+  margin-top:16px;
+}
+
+/* Feed side deco */
+.feed-deco{position:absolute;pointer-events:none;opacity:0.12}
+.feed-deco-tr{top:60px;right:30px}
+.feed-deco-bl{bottom:30px;left:30px}
+
+@media (max-width:680px){
+  .feed{padding:48px 20px 24px}
+  .feed-item{grid-template-columns:36px 1fr auto;padding:14px 12px;gap:12px}
+  .feed-link-text{display:none}
+  .feed-num{width:30px;height:30px;font-size:12px}
+  .feed-stats{display:none}
+}
+
 /* ========== TOC — Fixed Left Navigator ========== */
 .toc-nav{
   position:fixed;left:28px;top:50%;transform:translateY(-50%);
@@ -310,6 +413,7 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--fg);line-heig
 .toc-track--ultimate{--toc-color:var(--track-ultimate)}
 .toc-track--craft{--toc-color:var(--track-career)}
 .toc-track--product{--toc-color:var(--track-product)}
+.toc-track--feed{--toc-color:var(--track-feed)}
 /* 装饰性 SVG 标注 */
 .toc-deco{
   position:absolute;left:-22px;top:50%;transform:translateY(-50%);
@@ -416,6 +520,16 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--fg);line-heig
     <a class="toc-item" href="#product">
       <div class="toc-dot" style="border-radius:4px;"></div>
       <span class="toc-label">产品实现</span>
+    </a>
+  </div>
+
+  <div class="toc-spacer"></div>
+
+  <!-- AI Feed -->
+  <div class="toc-track toc-track--feed">
+    <a class="toc-item" href="#feed">
+      <div class="toc-dot" style="border-radius:2px;transform:rotate(45deg)"></div>
+      <span class="toc-label">AI食粮</span>
     </a>
   </div>
 
@@ -976,6 +1090,73 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--fg);line-heig
   </div>
 </section>
 
+<div class="track-divider"><hr></div>
+
+<!-- ===== AI FEED: 每日学习链接流 ===== -->
+<section id="feed" class="feed">
+  <!-- Side decorations -->
+  <svg class="feed-deco feed-deco-tr" viewBox="0 0 80 80" width="80" height="80">
+    <circle cx="40" cy="40" r="32" fill="none" stroke="var(--track-feed)" stroke-width="1" stroke-dasharray="3 5"/>
+    <circle cx="40" cy="40" r="20" fill="none" stroke="var(--track-feed)" stroke-width="1" stroke-dasharray="2 4"/>
+    <circle cx="40" cy="40" r="3" fill="var(--track-feed)"/>
+  </svg>
+  <svg class="feed-deco feed-deco-bl" viewBox="0 0 100 60" width="100" height="60">
+    <path d="M5,30 Q30,10 50,30 T95,30" fill="none" stroke="var(--track-feed)" stroke-width="1.2" stroke-dasharray="4 5"/>
+    <circle cx="5" cy="30" r="2.5" fill="var(--track-feed)"/>
+    <circle cx="95" cy="30" r="2.5" fill="var(--track-feed)"/>
+  </svg>
+
+  <div class="feed-header">
+    <div class="feed-header-left">
+      <div class="feed-eyebrow">Daily AI Diet</div>
+      <h2 class="feed-title">
+        <span class="feed-title-mark">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12c0-4.97 4.03-9 9-9s9 4.03 9 9"/><path d="M3 12c0 4.97 4.03 9 9 9"/><path d="M16 16l5 5"/><circle cx="12" cy="12" r="3"/></svg>
+        </span>
+        每日 <em>AI 食粮</em>
+      </h2>
+      <p class="feed-desc">每天投喂自己一份 AI 食粮——值得读、值得用、值得拆解的工具与情报。学习是输入，行动是输出，这里记录前者。</p>
+    </div>
+    <div class="feed-stats">
+      <div class="feed-stat">
+        <div class="num" id="feed-count">1</div>
+        <div class="lab">Items</div>
+      </div>
+      <div class="feed-stat">
+        <div class="num" id="feed-channels">1</div>
+        <div class="lab">Channels</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="feed-list" id="feed-list">
+
+    <!-- ===== Feed Item: 产品情报 ===== -->
+    <a class="feed-item" href="https://ai.woa.com/#/vedas/agent/home?explore=true&compilationId=compilation_70e6b92ae3b6480792241a40fc9bfb06" target="_blank" rel="noopener">
+      <div class="feed-num">01</div>
+      <div class="feed-body">
+        <div class="feed-name-row">
+          <span class="feed-name">产品情报</span>
+          <span class="feed-tag">情报</span>
+          <span class="feed-channel">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M8 12h8M12 8v8"/></svg>
+            腾讯内部
+          </span>
+        </div>
+        <div class="feed-link-text">ai.woa.com / vedas / agent · compilation_70e6b9…</div>
+      </div>
+      <div class="feed-arrow">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="9 7 17 7 17 15"/></svg>
+      </div>
+    </a>
+
+    <!-- 待补充：每天追加新条目即可 -->
+
+  </div>
+</section>
+
+<div class="track-divider"><hr></div>
+
 <!-- Stats -->
 <div class="stats-row">
   <div class="stat-item"><div class="stat-num" style="color:var(--track-growth)">6</div><div class="stat-label">Live</div></div>
@@ -989,7 +1170,7 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--fg);line-heig
   <p>十三座知识库全部点亮之时，你将拥有从认知到执行的完整闭环。每一步蜿蜒前行，都是在为终局蓄力。</p>
 </section>
 
-<footer class="site-footer">Young Atlas v5.2 · Built with Vela · Updated 2026-05-07</footer>
+<footer class="site-footer">Young Atlas v5.3 · Built with Vela · Updated 2026-05-18</footer>
 
 <script>
 function toggleTheme(){const h=document.documentElement;const n=h.getAttribute('data-theme')==='dark'?'light':'dark';h.setAttribute('data-theme',n);localStorage.setItem('ya-theme',n);updateIcon(n)}
@@ -1007,6 +1188,7 @@ function updateIcon(t){document.querySelector('.ico-sun').style.display=t==='dar
     {id:'track-ultimate', link:'[href="#track-ultimate"]'},
     {id:'craft',          link:'[href="#craft"]'},
     {id:'product',        link:'[href="#product"]'},
+    {id:'feed',           link:'[href="#feed"]'},
   ];
 
   const items = sections.map(s => ({
@@ -1034,6 +1216,27 @@ function updateIcon(t){document.querySelector('.ico-sun').style.display=t==='dar
       const target = document.querySelector(a.getAttribute('href'));
       if(target) target.scrollIntoView({behavior:'smooth', block:'start'});
     });
+  });
+})();
+
+// ===== AI Feed 自动统计 =====
+(function(){
+  const list = document.getElementById('feed-list');
+  if(!list) return;
+  const items = list.querySelectorAll('.feed-item');
+  const channels = new Set();
+  items.forEach(i => {
+    const ch = i.querySelector('.feed-channel');
+    if(ch) channels.add(ch.textContent.trim());
+  });
+  const cnt = document.getElementById('feed-count');
+  const cha = document.getElementById('feed-channels');
+  if(cnt) cnt.textContent = items.length;
+  if(cha) cha.textContent = channels.size;
+  // 自动重排序号
+  items.forEach((it,idx) => {
+    const num = it.querySelector('.feed-num');
+    if(num) num.textContent = String(idx+1).padStart(2,'0');
   });
 })();
 </script>
