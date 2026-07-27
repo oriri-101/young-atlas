@@ -264,7 +264,7 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--fg);line-heig
 .feed-title em{font-style:normal;font-weight:700;color:var(--track-feed)}
 .feed-title-mark{display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:8px;background:var(--track-feed-light);color:var(--track-feed)}
 .feed-title-mark svg{width:20px;height:20px}
-.feed-desc{font-size:13px;color:var(--fg2);font-weight:300;line-height:1.7;max-width:520px}
+.feed-desc{font-size:13px;color:var(--fg2);font-weight:300;line-height:1.7;white-space:nowrap}
 .feed-stats{display:flex;gap:24px;align-items:center}
 .feed-stat{text-align:right}
 .feed-stat .num{font-family:var(--font-display);font-size:26px;font-weight:600;color:var(--track-feed);letter-spacing:-0.5px;line-height:1}
@@ -467,6 +467,16 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--fg);line-heig
 <nav class="toc-nav" aria-label="Page Navigation">
   <div class="toc-logo">Young</div>
 
+  <!-- Daily Routine —置顶第一个模块 -->
+  <div class="toc-track toc-track--feed">
+    <a class="toc-item" href="#feed">
+      <div class="toc-dot" style="border-radius:2px;transform:rotate(45deg)"></div>
+      <span class="toc-label">Daily Routine</span>
+    </a>
+  </div>
+
+  <div class="toc-spacer"></div>
+
   <!-- Track 1 -->
   <div class="toc-track toc-track--growth">
     <a class="toc-item" href="#track-growth">
@@ -527,14 +537,6 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--fg);line-heig
 
   <div class="toc-spacer"></div>
 
-  <!-- AI Feed -->
-  <div class="toc-track toc-track--feed">
-    <a class="toc-item" href="#feed">
-      <div class="toc-dot" style="border-radius:2px;transform:rotate(45deg)"></div>
-      <span class="toc-label">AI食粮</span>
-    </a>
-  </div>
-
   <!-- 装饰性曲线 SVG -->
   <svg class="toc-deco" viewBox="0 0 20 220" width="20" height="220" style="left:-18px;top:10px;opacity:0.12">
     <path d="M10,0 Q2,55 10,110 Q18,165 10,220" fill="none" stroke="var(--fg3)" stroke-width="1" stroke-dasharray="3 5"/>
@@ -558,6 +560,111 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--fg);line-heig
   <p>每一座知识库都是认知版图上的恒星。不必按顺序，选择你当下最需要的方向，点亮属于你的星图。</p>
   <div class="hero-progress"><div class="bar-track"><div class="bar-fill" style="width:46%"></div></div><span class="bar-label">46% explored</span></div>
 </section>
+
+<!-- ===== DAILY ROUTINE: 每日固定动作 ===== -->
+<section id="feed" class="feed">
+  <!-- Side decorations -->
+  <svg class="feed-deco feed-deco-tr" viewBox="0 0 80 80" width="80" height="80">
+    <circle cx="40" cy="40" r="32" fill="none" stroke="var(--track-feed)" stroke-width="1" stroke-dasharray="3 5"/>
+    <circle cx="40" cy="40" r="20" fill="none" stroke="var(--track-feed)" stroke-width="1" stroke-dasharray="2 4"/>
+    <circle cx="40" cy="40" r="3" fill="var(--track-feed)"/>
+  </svg>
+  <svg class="feed-deco feed-deco-bl" viewBox="0 0 100 60" width="100" height="60">
+    <path d="M5,30 Q30,10 50,30 T95,30" fill="none" stroke="var(--track-feed)" stroke-width="1.2" stroke-dasharray="4 5"/>
+    <circle cx="5" cy="30" r="2.5" fill="var(--track-feed)"/>
+    <circle cx="95" cy="30" r="2.5" fill="var(--track-feed)"/>
+  </svg>
+
+  <div class="feed-header">
+    <div class="feed-header-left">
+      <div class="feed-eyebrow">Daily Routine</div>
+      <h2 class="feed-title">
+        <span class="feed-title-mark">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12c0-4.97 4.03-9 9-9s9 4.03 9 9"/><path d="M3 12c0 4.97 4.03 9 9 9"/><path d="M16 16l5 5"/><circle cx="12" cy="12" r="3"/></svg>
+        </span>
+        Daily <em>Routine</em>
+      </h2>
+      <p class="feed-desc">每天必刷的固定动作——AI 情报追踪、财富认知升级、前沿信息摄入。习惯是最好的复利。</p>
+    </div>
+    <div class="feed-stats">
+      <div class="feed-stat">
+        <div class="num" id="feed-count">3</div>
+        <div class="lab">Items</div>
+      </div>
+      <div class="feed-stat">
+        <div class="num" id="feed-channels">2</div>
+        <div class="lab">Channels</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="feed-list" id="feed-list">
+
+    <!-- ===== Feed Item: 产品情报 ===== -->
+    <a class="feed-item" href="https://ai.woa.com/#/vedas/agent/home?explore=true&compilationId=compilation_70e6b92ae3b6480792241a40fc9bfb06" target="_blank" rel="noopener">
+      <div class="feed-num">01</div>
+      <div class="feed-body">
+        <div class="feed-name-row">
+          <span class="feed-name">产品情报</span>
+          <span class="feed-tag">AI</span>
+          <span class="feed-tag">情报</span>
+          <span class="feed-channel">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M8 12h8M12 8v8"/></svg>
+            腾讯内部
+          </span>
+        </div>
+        <div class="feed-link-text">ai.woa.com / vedas / agent · compilation_70e6b9…</div>
+      </div>
+      <div class="feed-arrow">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="9 7 17 7 17 15"/></svg>
+      </div>
+    </a>
+
+    <!-- ===== Feed Item: 前沿资讯 ===== -->
+    <a class="feed-item" href="https://ai.woa.com/#/vedas/agent/home?explore=true&compilationId=compilation_5902f22bd48e4519bd9525ebf1cbafe8" target="_blank" rel="noopener">
+      <div class="feed-num">02</div>
+      <div class="feed-body">
+        <div class="feed-name-row">
+          <span class="feed-name">前沿资讯</span>
+          <span class="feed-tag">AI</span>
+          <span class="feed-tag">情报</span>
+          <span class="feed-channel">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M8 12h8M12 8v8"/></svg>
+            腾讯内部
+          </span>
+        </div>
+        <div class="feed-link-text">ai.woa.com / vedas / agent · compilation_5902f2…</div>
+      </div>
+      <div class="feed-arrow">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="9 7 17 7 17 15"/></svg>
+      </div>
+    </a>
+
+    <!-- ===== Feed Item: 2026财富呱呱涨 ===== -->
+    <a class="feed-item" href="https://my.feishu.cn/wiki/OVPCwPUDyiRpmwkfKuVcU5jKnFh" target="_blank" rel="noopener">
+      <div class="feed-num">03</div>
+      <div class="feed-body">
+        <div class="feed-name-row">
+          <span class="feed-name">2026 财富呱呱涨</span>
+          <span class="feed-tag">财富</span>
+          <span class="feed-channel">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+            飞书
+          </span>
+        </div>
+        <div class="feed-link-text">my.feishu.cn / wiki / OVPCwPUDyiRpmw…</div>
+      </div>
+      <div class="feed-arrow">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="9 7 17 7 17 15"/></svg>
+      </div>
+    </a>
+
+    <!-- 待补充：每天追加新条目即可 -->
+
+  </div>
+</section>
+
+<div class="track-divider"><hr></div>
 
 <!-- ===== TRACK 1: 成长基石 ===== -->
 <section id="track-growth" class="track track--growth">
@@ -1093,92 +1200,6 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--fg);line-heig
   </div>
 </section>
 
-<div class="track-divider"><hr></div>
-
-<!-- ===== AI FEED: 每日学习链接流 ===== -->
-<section id="feed" class="feed">
-  <!-- Side decorations -->
-  <svg class="feed-deco feed-deco-tr" viewBox="0 0 80 80" width="80" height="80">
-    <circle cx="40" cy="40" r="32" fill="none" stroke="var(--track-feed)" stroke-width="1" stroke-dasharray="3 5"/>
-    <circle cx="40" cy="40" r="20" fill="none" stroke="var(--track-feed)" stroke-width="1" stroke-dasharray="2 4"/>
-    <circle cx="40" cy="40" r="3" fill="var(--track-feed)"/>
-  </svg>
-  <svg class="feed-deco feed-deco-bl" viewBox="0 0 100 60" width="100" height="60">
-    <path d="M5,30 Q30,10 50,30 T95,30" fill="none" stroke="var(--track-feed)" stroke-width="1.2" stroke-dasharray="4 5"/>
-    <circle cx="5" cy="30" r="2.5" fill="var(--track-feed)"/>
-    <circle cx="95" cy="30" r="2.5" fill="var(--track-feed)"/>
-  </svg>
-
-  <div class="feed-header">
-    <div class="feed-header-left">
-      <div class="feed-eyebrow">Daily AI Diet</div>
-      <h2 class="feed-title">
-        <span class="feed-title-mark">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12c0-4.97 4.03-9 9-9s9 4.03 9 9"/><path d="M3 12c0 4.97 4.03 9 9 9"/><path d="M16 16l5 5"/><circle cx="12" cy="12" r="3"/></svg>
-        </span>
-        每日 <em>AI 食粮</em>
-      </h2>
-      <p class="feed-desc">每天投喂自己一份 AI 食粮——值得读、值得用、值得拆解的工具与情报。学习是输入，行动是输出，这里记录前者。</p>
-    </div>
-    <div class="feed-stats">
-      <div class="feed-stat">
-        <div class="num" id="feed-count">1</div>
-        <div class="lab">Items</div>
-      </div>
-      <div class="feed-stat">
-        <div class="num" id="feed-channels">1</div>
-        <div class="lab">Channels</div>
-      </div>
-    </div>
-  </div>
-
-  <div class="feed-list" id="feed-list">
-
-    <!-- ===== Feed Item: 产品情报 ===== -->
-    <a class="feed-item" href="https://ai.woa.com/#/vedas/agent/home?explore=true&compilationId=compilation_70e6b92ae3b6480792241a40fc9bfb06" target="_blank" rel="noopener">
-      <div class="feed-num">01</div>
-      <div class="feed-body">
-        <div class="feed-name-row">
-          <span class="feed-name">产品情报</span>
-          <span class="feed-tag">情报</span>
-          <span class="feed-channel">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M8 12h8M12 8v8"/></svg>
-            腾讯内部
-          </span>
-        </div>
-        <div class="feed-link-text">ai.woa.com / vedas / agent · compilation_70e6b9…</div>
-      </div>
-      <div class="feed-arrow">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="9 7 17 7 17 15"/></svg>
-      </div>
-    </a>
-
-    <!-- ===== Feed Item: 前沿资讯 ===== -->
-    <a class="feed-item" href="https://ai.woa.com/#/vedas/agent/home?explore=true&compilationId=compilation_5902f22bd48e4519bd9525ebf1cbafe8" target="_blank" rel="noopener">
-      <div class="feed-num">02</div>
-      <div class="feed-body">
-        <div class="feed-name-row">
-          <span class="feed-name">前沿资讯</span>
-          <span class="feed-tag">情报</span>
-          <span class="feed-channel">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M8 12h8M12 8v8"/></svg>
-            腾讯内部
-          </span>
-        </div>
-        <div class="feed-link-text">ai.woa.com / vedas / agent · compilation_5902f2…</div>
-      </div>
-      <div class="feed-arrow">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="9 7 17 7 17 15"/></svg>
-      </div>
-    </a>
-
-    <!-- 待补充：每天追加新条目即可 -->
-
-  </div>
-</section>
-
-<div class="track-divider"><hr></div>
-
 <!-- Stats -->
 <div class="stats-row">
   <div class="stat-item"><div class="stat-num" style="color:var(--track-growth)">6</div><div class="stat-label">Live</div></div>
@@ -1192,7 +1213,7 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--fg);line-heig
   <p>十三座知识库全部点亮之时，你将拥有从认知到执行的完整闭环。每一步蜿蜒前行，都是在为终局蓄力。</p>
 </section>
 
-<footer class="site-footer">Young Atlas v5.3 · Built with Vela · Updated 2026-05-18</footer>
+<footer class="site-footer">Young Atlas v5.4 · Built with Vela · Updated 2026-07-27</footer>
 
 <script>
 function toggleTheme(){const h=document.documentElement;const n=h.getAttribute('data-theme')==='dark'?'light':'dark';h.setAttribute('data-theme',n);localStorage.setItem('ya-theme',n);updateIcon(n)}
