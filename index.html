@@ -3,6 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&display=swap" rel="stylesheet">
 <title>Young — Knowledge Atlas</title>
 <style>
 /*============================================================
@@ -29,7 +32,7 @@
 
   --font-display:'SF Pro Display',-apple-system,'PingFang SC','Noto Sans SC',sans-serif;
   --font-body:'SF Pro Text',-apple-system,'PingFang SC','Noto Sans SC',sans-serif;
-  --font-serif:'Georgia','Noto Serif SC',serif;
+  --font-serif:'Cormorant Garamond','Georgia','Noto Serif SC',serif;
 }
 [data-theme="dark"]{
   --bg:#1C1B19;--bg-card:#262523;
@@ -306,30 +309,32 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--fg);line-heig
 .feed-track-quote{font-family:var(--font-serif);font-size:22px;font-style:italic;font-weight:400;line-height:1.45;color:var(--fg);margin-top:2px;letter-spacing:-0.2px;max-width:520px;white-space:normal}
 .feed-track-list{display:flex;flex-direction:column;gap:0;position:relative;z-index:1}
 
-/* --- A 线 · 向往的生活：鼠尾草绿细线 + 右上缓转小菱形（与 B 线同语系） --- */
-.feed-track--life{color:#5C8C7A;border-color:rgba(92,140,122,.16)}
-.feed-track--life:hover{border-color:rgba(92,140,122,.32)}
+/* --- A 线 · Life Aspired：暖赭石细线 + 右上缓转小菱形（柔和·内省） --- */
+.feed-track--life{color:#B07840;border-color:rgba(196,120,58,.16)}
+.feed-track--life:hover{border-color:rgba(196,120,58,.32)}
 .feed-track--life::before{
   content:'';position:absolute;top:34px;right:32px;width:6px;height:6px;
-  border:1.5px solid rgba(92,140,122,.55);
+  border:1.5px solid rgba(196,120,58,.55);
   animation:spinDiamond 26s linear infinite;pointer-events:none;
 }
 .feed-track--life::after{display:none}
-.feed-track--life .feed-track-label{color:#5C8C7A;letter-spacing:2.8px}
-.feed-track--life .feed-track-title svg{color:#7AA897}
-.feed-list-life .feed-item{background:transparent;border:1px solid transparent;border-bottom:1px dashed rgba(92,140,122,.14);border-radius:0;color:var(--fg)}
+.feed-track--life .feed-track-label{color:#B5652A;letter-spacing:2.8px}
+.feed-track--life .feed-track-title{color:#7A4A1E;font-family:var(--font-serif);font-weight:600;letter-spacing:-0.3px}
+.feed-track--life .feed-track-title svg{color:#C4783A}
+.feed-track--life .feed-track-slogan{color:#9C6A3C;font-style:italic}
+.feed-list-life .feed-item{background:transparent;border:1px solid transparent;border-bottom:1px dashed rgba(196,120,58,.14);border-radius:0;color:var(--fg)}
 .feed-list-life .feed-item:last-child{border-bottom:none}
 .feed-list-life .feed-name{color:var(--fg);font-family:var(--font-display);font-weight:700;letter-spacing:0}
-.feed-list-life .feed-tag{background:rgba(92,140,122,.07);color:#5C8C7A}
+.feed-list-life .feed-tag{background:rgba(196,120,58,.07);color:#A6602A}
 .feed-list-life .feed-channel{background:transparent;color:var(--fg3);border-color:var(--border)}
 .feed-list-life .feed-link-text{color:var(--fg3)}
-.feed-list-life .feed-num{background:transparent;border-color:rgba(92,140,122,.22);color:#5C8C7A;border-style:solid}
-.feed-list-life .feed-arrow{color:#5C8C7A}
-.feed-list-life .feed-item:hover{background:rgba(92,140,122,.035);border-radius:6px;border-color:rgba(92,140,122,.16);border-bottom-color:rgba(92,140,122,.16);transform:translateX(4px)}
-.feed-list-life .feed-item:hover .feed-num{border-color:rgba(92,140,122,.5)}
+.feed-list-life .feed-num{background:transparent;border-color:rgba(196,120,58,.22);color:#B5652A;border-style:solid}
+.feed-list-life .feed-arrow{color:#B5652A}
+.feed-list-life .feed-item:hover{background:rgba(196,120,58,.035);border-radius:6px;border-color:rgba(196,120,58,.16);border-bottom-color:rgba(196,120,58,.16);transform:translateX(4px)}
+.feed-list-life .feed-item:hover .feed-num{border-color:rgba(196,120,58,.5)}
 .feed-list-life .feed-empty{color:var(--fg3);opacity:.5;border-color:var(--border);background:transparent;border-style:dashed;border-radius:6px}
 
-/* --- B 线 · 事业的巅峰：冷金属灰蓝细线 + 右上缓转小菱形 --- */
+/* --- B 线 · Career Peak：鼠尾草绿细线 + 右上缓转小菱形（锋利·向外） --- */
 .feed-track--career{color:#5C8C7A;border-color:rgba(92,140,122,.18)}
 .feed-track--career:hover{border-color:rgba(92,140,122,.34)}
 .feed-track--career::before{
@@ -339,11 +344,12 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--fg);line-heig
 }
 .feed-track--career::after{display:none}
 .feed-track--career .feed-track-label{color:#5C8C7A;letter-spacing:3px}
-.feed-track--career .feed-track-title{font-weight:700;letter-spacing:.3px}
+.feed-track--career .feed-track-title{color:#3F5E4E;font-family:var(--font-serif);font-weight:600;letter-spacing:-0.3px}
 .feed-track--career .feed-track-title svg{color:#7AA897}
+.feed-track--career .feed-track-slogan{color:#5C8C7A;font-style:italic}
 .feed-list-career .feed-item{background:transparent;border:1px solid transparent;border-bottom:1px dashed rgba(92,140,122,.16);border-radius:0;color:var(--fg)}
 .feed-list-career .feed-item:last-child{border-bottom:none}
-.feed-list-career .feed-name{color:var(--fg);font-family:var(--font-display);letter-spacing:0}
+.feed-list-career .feed-name{color:var(--fg);font-family:var(--font-display);font-weight:700;letter-spacing:0}
 .feed-list-career .feed-tag{background:rgba(92,140,122,.08);color:#5C8C7A}
 .feed-list-career .feed-channel{background:transparent;color:var(--fg3);border-color:var(--border)}
 .feed-list-career .feed-link-text{color:var(--fg3)}
@@ -1350,7 +1356,7 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--fg);line-heig
   <p>十三座知识库全部点亮之时，你将拥有从认知到执行的完整闭环。每一步蜿蜒前行，都是在为终局蓄力。</p>
 </section>
 
-<footer class="site-footer">Young Atlas v6.5 · Built with Vela · Updated 2026-08-06</footer>
+<footer class="site-footer">Young Atlas v6.6 · Built with Vela · Updated 2026-08-06</footer>
 
 <script>
 function toggleTheme(){const h=document.documentElement;const n=h.getAttribute('data-theme')==='dark'?'light':'dark';h.setAttribute('data-theme',n);localStorage.setItem('ya-theme',n);updateIcon(n)}
