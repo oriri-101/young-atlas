@@ -24,6 +24,8 @@
   --track-ultimate:#C4866B;--track-ultimate-light:#F4E8E2;--track-ultimate-mid:#DDB8A6;
   --track-product:#5B8DB8;--track-product-light:#E6EFF7;--track-product-mid:#A8C4DC;
   --track-feed:#5C8C7A;--track-feed-light:#E8F1ED;--track-feed-mid:#A6C5B6;
+  --track-life:#7AA897;--track-life-light:#FBEAD2;--track-life-mid:#E8C39A;
+  --surface:rgba(0,0,0,0.02);
 
   --font-display:'SF Pro Display',-apple-system,'PingFang SC','Noto Sans SC',sans-serif;
   --font-body:'SF Pro Text',-apple-system,'PingFang SC','Noto Sans SC',sans-serif;
@@ -40,6 +42,8 @@
   --track-ultimate:#D49A7E;--track-ultimate-light:rgba(212,154,126,0.1);--track-ultimate-mid:rgba(212,154,126,0.2);
   --track-product:#7AAFD4;--track-product-light:rgba(122,175,212,0.1);--track-product-mid:rgba(122,175,212,0.2);
   --track-feed:#7DBAA4;--track-feed-light:rgba(125,186,164,0.1);--track-feed-mid:rgba(125,186,164,0.2);
+  --track-life:#E0A566;--track-life-light:rgba(224,165,102,0.12);--track-life-mid:rgba(224,165,102,0.25);
+  --surface:rgba(255,255,255,0.03);
 }
 body{font-family:var(--font-body);background:var(--bg);color:var(--fg);line-height:1.8;-webkit-font-smoothing:antialiased;transition:background .4s,color .4s;overflow-x:hidden}
 
@@ -271,6 +275,89 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--fg);line-heig
 .feed-stat .lab{font-size:10px;color:var(--fg3);text-transform:uppercase;letter-spacing:1.2px;font-weight:600;margin-top:4px}
 
 .feed-list{display:flex;flex-direction:column;gap:0}
+
+/* ===== Dual Track: A/B 并列 —— 反差视觉：暖调理想主义 vs 冷调权力感 ===== */
+/* ===== Daily Routine · 双轨极简版 (v6.0) — 留白克制 + 精巧细线动效 =====
+   设计哲学：去底色重彩，留呼吸感；用一两笔精巧的细线 + 微动效区分两线
+   A线·向往的生活：暖赭石细线，呼吸小圆点（柔和·内省）
+   B线·事业的巅峰：冷金属灰蓝细线，缓转小菱形（锋利·向处） */
+.feed-tracks{display:grid;grid-template-columns:1fr 1fr;gap:36px;margin-top:8px;align-items:stretch}
+.feed-track-col{
+  display:flex;flex-direction:column;position:relative;
+  padding:30px 28px 24px;
+  border-radius:14px;
+  background:transparent;
+  border:1px solid var(--border);
+  transition:border-color .5s ease,transform .5s cubic-bezier(.16,1,.3,1);
+}
+.feed-track-col:hover{transform:translateY(-2px)}
+.feed-track-header{margin-bottom:22px;padding-bottom:14px;position:relative;z-index:1}
+.feed-track-header::after{
+  content:'';position:absolute;left:0;bottom:0;height:1px;width:48%;
+  background:linear-gradient(90deg,transparent,currentColor 30%,currentColor 70%,transparent);
+  background-size:220% 100%;
+  opacity:.32;animation:flowLine 10s linear infinite;
+}
+.feed-track--career .feed-track-header::after{left:auto;right:0;animation-direction:reverse}
+.feed-track-label{font-size:9.5px;font-weight:700;letter-spacing:2.8px;text-transform:uppercase;color:var(--fg3);margin-bottom:8px;display:block}
+.feed-track-title{font-family:var(--font-display);font-size:19px;font-weight:700;letter-spacing:-0.3px;color:var(--fg);display:flex;align-items:center;gap:9px}
+.feed-track-slogan{font-family:var(--font-serif);font-size:13.5px;font-style:italic;margin-top:10px;font-weight:300;line-height:1.65;max-width:none;white-space:nowrap}
+/* 金句作为主视觉：替代 A 线"向往的生活"标题 */
+.feed-track-quote{font-family:var(--font-serif);font-size:22px;font-style:italic;font-weight:400;line-height:1.45;color:var(--fg);margin-top:2px;letter-spacing:-0.2px;max-width:520px;white-space:normal}
+.feed-track-list{display:flex;flex-direction:column;gap:0;position:relative;z-index:1}
+
+/* --- A 线 · 向往的生活：鼠尾草绿细线 + 右上缓转小菱形（与 B 线同语系） --- */
+.feed-track--life{color:#5C8C7A;border-color:rgba(92,140,122,.16)}
+.feed-track--life:hover{border-color:rgba(92,140,122,.32)}
+.feed-track--life::before{
+  content:'';position:absolute;top:34px;right:32px;width:6px;height:6px;
+  border:1.5px solid rgba(92,140,122,.55);
+  animation:spinDiamond 26s linear infinite;pointer-events:none;
+}
+.feed-track--life::after{display:none}
+.feed-track--life .feed-track-label{color:#5C8C7A;letter-spacing:2.8px}
+.feed-track--life .feed-track-title svg{color:#7AA897}
+.feed-list-life .feed-item{background:transparent;border:1px solid transparent;border-bottom:1px dashed rgba(92,140,122,.14);border-radius:0;color:var(--fg)}
+.feed-list-life .feed-item:last-child{border-bottom:none}
+.feed-list-life .feed-name{color:var(--fg);font-family:var(--font-serif);font-weight:600;font-style:italic}
+.feed-list-life .feed-tag{background:rgba(92,140,122,.07);color:#5C8C7A}
+.feed-list-life .feed-channel{background:transparent;color:var(--fg3);border-color:var(--border)}
+.feed-list-life .feed-link-text{color:var(--fg3)}
+.feed-list-life .feed-num{background:transparent;border-color:rgba(92,140,122,.22);color:#5C8C7A;border-style:solid}
+.feed-list-life .feed-arrow{color:#5C8C7A}
+.feed-list-life .feed-item:hover{background:rgba(92,140,122,.035);border-radius:6px;border-color:rgba(92,140,122,.16);border-bottom-color:rgba(92,140,122,.16);transform:translateX(4px)}
+.feed-list-life .feed-item:hover .feed-num{border-color:rgba(92,140,122,.5)}
+.feed-list-life .feed-empty{color:var(--fg3);opacity:.5;border-color:var(--border);background:transparent;border-style:dashed;border-radius:6px}
+
+/* --- B 线 · 事业的巅峰：冷金属灰蓝细线 + 右上缓转小菱形 --- */
+.feed-track--career{color:#5C8C7A;border-color:rgba(92,140,122,.18)}
+.feed-track--career:hover{border-color:rgba(92,140,122,.34)}
+.feed-track--career::before{
+  content:'';position:absolute;top:34px;right:32px;width:6px;height:6px;
+  border:1.5px solid rgba(92,140,122,.55);
+  animation:spinDiamond 26s linear infinite;pointer-events:none;
+}
+.feed-track--career::after{display:none}
+.feed-track--career .feed-track-label{color:#5C8C7A;letter-spacing:3px}
+.feed-track--career .feed-track-title{font-weight:700;letter-spacing:.3px}
+.feed-track--career .feed-track-title svg{color:#7AA897}
+.feed-list-career .feed-item{background:transparent;border:1px solid transparent;border-bottom:1px dashed rgba(92,140,122,.16);border-radius:0;color:var(--fg)}
+.feed-list-career .feed-item:last-child{border-bottom:none}
+.feed-list-career .feed-name{color:var(--fg);font-family:var(--font-display);letter-spacing:0}
+.feed-list-career .feed-tag{background:rgba(92,140,122,.08);color:#5C8C7A}
+.feed-list-career .feed-channel{background:transparent;color:var(--fg3);border-color:var(--border)}
+.feed-list-career .feed-link-text{color:var(--fg3)}
+.feed-list-career .feed-num{background:transparent;border-color:rgba(92,140,122,.24);color:#5C8C7A;border-style:solid}
+.feed-list-career .feed-arrow{color:#5C8C7A}
+.feed-list-career .feed-item:hover{background:rgba(92,140,122,.045);border-radius:6px;border-color:rgba(92,140,122,.2);border-bottom-color:rgba(92,140,122,.2);transform:translateX(4px)}
+.feed-list-career .feed-item:hover .feed-num{border-color:rgba(92,140,122,.55)}
+.feed-list-career .feed-empty{color:var(--fg3);opacity:.5;border-color:var(--border);background:transparent;border-style:dashed;border-radius:6px}
+
+@keyframes flowLine{0%{background-position:0% 0}100%{background-position:220% 0}}
+@keyframes breathe{0%,100%{opacity:.3;transform:scale(.85)}50%{opacity:.75;transform:scale(1.15)}}
+@keyframes spinDiamond{0%{transform:rotate(45deg)}100%{transform:rotate(405deg)}}
+.feed-empty{text-align:center;padding:32px 16px;color:var(--fg3);font-size:13px;font-style:italic;opacity:0.6}
+.feed-empty-icon{width:32px;height:32px;margin:0 auto 8px;opacity:0.3}
 .feed-item{
   display:grid;grid-template-columns:48px 1fr auto;gap:18px;align-items:center;
   padding:18px 20px;border-radius:10px;
@@ -354,6 +441,7 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--fg);line-heig
   .feed-link-text{display:none}
   .feed-num{width:30px;height:30px;font-size:12px}
   .feed-stats{display:none}
+  .feed-tracks{grid-template-columns:1fr;gap:32px}
 }
 
 /* ========== TOC — Fixed Left Navigator ========== */
@@ -598,7 +686,49 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--fg);line-heig
     </div>
   </div>
 
-  <div class="feed-list" id="feed-list">
+  <div class="feed-tracks" id="feed-list">
+
+    <!-- ===== A 线：向往的生活（以金句作主视觉） ===== -->
+    <div class="feed-track-col feed-track--life">
+      <div class="feed-track-header feed-track-header--life">
+        <div class="feed-track-label">Track A</div>
+        <div class="feed-track-quote">阳光给万物镀上金边，连影子都在发光</div>
+      </div>
+      <div class="feed-track-list feed-list-life">
+
+    <!-- ===== Feed Item: 2026财富呱呱涨（已移至 A 线） ===== -->
+    <a class="feed-item" href="https://my.feishu.cn/wiki/OVPCwPUDyiRpmwkfKuVcU5jKnFh" target="_blank" rel="noopener">
+      <div class="feed-num">01</div>
+      <div class="feed-body">
+        <div class="feed-name-row">
+          <span class="feed-name">2026 财富呱呱涨</span>
+          <span class="feed-tag">财富</span>
+          <span class="feed-channel">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+            飞书
+          </span>
+        </div>
+        <div class="feed-link-text">my.feishu.cn / wiki / OVPCwPUDyiRpmw…</div>
+      </div>
+      <div class="feed-arrow">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="9 7 17 7 17 15"/></svg>
+      </div>
+    </a>
+
+      </div>
+    </div>
+
+    <!-- ===== B 线：事业的巅峰 ===== -->
+    <div class="feed-track-col feed-track--career">
+      <div class="feed-track-header feed-track-header--career">
+        <div class="feed-track-label">Track B</div>
+        <div class="feed-track-title feed-track-title--career">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+          事业的巅峰
+        </div>
+        <div class="feed-track-slogan">要为喜欢的东西奔跑，走路真的来不及</div>
+      </div>
+      <div class="feed-track-list feed-list-career">
 
     <!-- ===== Feed Item: 产品情报 ===== -->
     <a class="feed-item" href="https://ai.woa.com/#/vedas/agent/home?explore=true&compilationId=compilation_70e6b92ae3b6480792241a40fc9bfb06" target="_blank" rel="noopener">
@@ -640,24 +770,7 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--fg);line-heig
       </div>
     </a>
 
-    <!-- ===== Feed Item: 2026财富呱呱涨 ===== -->
-    <a class="feed-item" href="https://my.feishu.cn/wiki/OVPCwPUDyiRpmwkfKuVcU5jKnFh" target="_blank" rel="noopener">
-      <div class="feed-num">03</div>
-      <div class="feed-body">
-        <div class="feed-name-row">
-          <span class="feed-name">2026 财富呱呱涨</span>
-          <span class="feed-tag">财富</span>
-          <span class="feed-channel">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
-            飞书
-          </span>
-        </div>
-        <div class="feed-link-text">my.feishu.cn / wiki / OVPCwPUDyiRpmw…</div>
-      </div>
-      <div class="feed-arrow">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="9 7 17 7 17 15"/></svg>
-      </div>
-    </a>
+    <!-- ===== Feed Item: 2026财富呱呱涨 已移至 A 线 ===== -->
 
     <!-- ===== Feed Item: Product Hunt ===== -->
     <a class="feed-item" href="https://www.producthunt.com/?bc=1" target="_blank" rel="noopener">
@@ -678,9 +791,10 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--fg);line-heig
       </div>
     </a>
 
-    <!-- 待补充：每天追加新条目即可 -->
+      </div><!-- /.feed-list-career -->
+    </div><!-- /.feed-track--career -->
 
-  </div>
+  </div><!-- /.feed-tracks -->
 </section>
 
 <div class="track-divider"><hr></div>
@@ -1232,7 +1346,7 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--fg);line-heig
   <p>十三座知识库全部点亮之时，你将拥有从认知到执行的完整闭环。每一步蜿蜒前行，都是在为终局蓄力。</p>
 </section>
 
-<footer class="site-footer">Young Atlas v5.5 · Built with Vela · Updated 2026-07-31</footer>
+<footer class="site-footer">Young Atlas v6.3 · Built with Vela · Updated 2026-08-06</footer>
 
 <script>
 function toggleTheme(){const h=document.documentElement;const n=h.getAttribute('data-theme')==='dark'?'light':'dark';h.setAttribute('data-theme',n);localStorage.setItem('ya-theme',n);updateIcon(n)}
