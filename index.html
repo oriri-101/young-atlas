@@ -601,9 +601,40 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--fg);line-heig
 .side-deco>*:nth-child(1){animation-delay:.2s}
 .side-deco>*:nth-child(2){animation-delay:.4s}
 .side-deco>*:nth-child(3){animation-delay:.6s}
+/* 密码锁屏 */
+.lock-screen{position:fixed;inset:0;z-index:9999;background:var(--bg);display:flex;align-items:center;justify-content:center;flex-direction:column;transition:opacity .4s}
+.lock-screen.hidden{opacity:0;pointer-events:none}
+.lock-icon{width:64px;height:64px;margin-bottom:24px;border-radius:50%;background:var(--track-sand-light);display:flex;align-items:center;justify-content:center}
+.lock-icon svg{width:28px;height:28px;stroke:var(--track-sand);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.lock-title{font-family:var(--font-serif);font-size:22px;font-style:italic;font-weight:600;margin-bottom:6px;color:var(--fg)}
+.lock-sub{font-size:13px;color:var(--fg3);margin-bottom:24px;font-weight:300}
+.lock-form{display:flex;gap:8px;align-items:center}
+.lock-input{padding:10px 16px;border-radius:8px;border:1px solid var(--border);background:var(--bg-card);color:var(--fg);font-size:15px;width:160px;outline:none;text-align:center;letter-spacing:4px;transition:border .2s}
+.lock-input:focus{border-color:var(--track-sand)}
+.lock-input.shake{animation:lockShake .4s}
+.lock-btn{padding:10px 20px;border-radius:8px;border:none;background:var(--track-sand);color:#fff;font-size:14px;font-weight:600;cursor:pointer;transition:opacity .2s}
+.lock-btn:hover{opacity:.85}
+.lock-error{font-size:12px;color:#c62828;margin-top:10px;min-height:18px}
+@keyframes lockShake{0%,100%{transform:translateX(0)}20%,60%{transform:translateX(-8px)}40%,80%{transform:translateX(8px)}}
 </style>
 </head>
 <body>
+
+<!-- 密码锁屏 -->
+<div class="lock-screen" id="lockScreen">
+  <div class="lock-icon">
+    <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+  </div>
+  <div class="lock-title">Young Atlas</div>
+  <div class="lock-sub">请输入访问密码</div>
+  <div class="lock-form">
+    <input class="lock-input" id="lockInput" type="password" maxlength="10" placeholder="····" autofocus />
+    <button class="lock-btn" onclick="tryUnlock()">进入</button>
+  </div>
+  <div class="lock-error" id="lockError"></div>
+</div>
+
+<div id="appShell" style="display:none">
 
 <!-- ===== TOC: Fixed Left Navigator ===== -->
 <nav class="toc-nav" aria-label="Page Navigation">
@@ -1545,7 +1576,7 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--fg);line-heig
   <p>十三座知识库全部点亮之时，你将拥有从认知到执行的完整闭环。每一步蜿蜒前行，都是在为终局蓄力。</p>
 </section>
 
-<footer class="site-footer">Young Atlas v6.9 · Built with Vela · Updated 2026-08-27</footer>
+<footer class="site-footer">Young Atlas v7.0 · Built with Vela · Updated 2026-08-28</footer>
 
 <script>
 function toggleTheme(){const h=document.documentElement;const n=h.getAttribute('data-theme')==='dark'?'light':'dark';h.setAttribute('data-theme',n);localStorage.setItem('ya-theme',n);updateIcon(n)}
@@ -1614,6 +1645,32 @@ function updateIcon(t){document.querySelector('.ico-sun').style.display=t==='dar
     if(num) num.textContent = String(idx+1).padStart(2,'0');
   });
 })();
+</script>
+
+</div>
+
+<script>
+// === 密码锁 ===
+const YA_PASS='1109';
+function tryUnlock(){
+  const v=document.getElementById('lockInput').value;
+  if(v===YA_PASS){
+    sessionStorage.setItem('ya_unlocked','1');
+    showYaApp();
+  }else{
+    const inp=document.getElementById('lockInput');
+    inp.classList.remove('shake');void inp.offsetWidth;inp.classList.add('shake');
+    document.getElementById('lockError').textContent='密码错误，请重试';
+    inp.value='';inp.focus();
+  }
+}
+function showYaApp(){
+  document.getElementById('lockScreen').classList.add('hidden');
+  document.getElementById('appShell').style.display='block';
+  setTimeout(()=>{document.getElementById('lockScreen').style.display='none'},400);
+}
+document.getElementById('lockInput').addEventListener('keydown',e=>{if(e.key==='Enter')tryUnlock()});
+if(sessionStorage.getItem('ya_unlocked')==='1')showYaApp();
 </script>
 </body>
 </html>
