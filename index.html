@@ -606,23 +606,102 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--fg);line-heig
 .lock-screen.hidden{opacity:0;pointer-events:none}
 .lock-laser-bg{position:absolute;inset:0;z-index:0}
 .lock-laser-bg canvas{display:block}
-.lock-content{position:relative;z-index:1;width:100%;display:flex;flex-direction:column;align-items:center;transform:translateY(-8vh)}
+
+/* 瀑布式励志语录 —— 叠加在光束之上、卡片之下，整句竖排垫落 + 3D远近景深 */
+.lock-quotes{position:absolute;inset:-40px -40px -40px -40px;z-index:0;pointer-events:none;overflow:hidden}
+.lock-quote-sent{
+  position:absolute;top:-40px;
+  writing-mode:vertical-rl;text-orientation:upright;
+  font-family:'Cormorant Garamond','Georgia','Noto Serif SC',serif;
+  letter-spacing:3px;white-space:nowrap;
+  animation-name:lockQuoteDrop;animation-timing-function:linear;animation-fill-mode:forwards;
+  will-change:transform,opacity;
+}
+@keyframes lockQuoteDrop{
+  0%{opacity:0;transform:translateY(-60px)}
+  8%{opacity:var(--qop)}
+  88%{opacity:var(--qop)}
+  100%{opacity:0;transform:translateY(115vh)}
+}
+.lock-content{position:relative;z-index:2;width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center}
+
+/* ===== 清辉孤月 —— 默认态，位于光束收窄的源头处；点击后收起并展开密码卡片 ===== */
+.lock-trigger{
+  position:absolute;top:50%;left:50%;
+  width:64px;height:64px;cursor:pointer;margin:-32px 0 0 -32px;
+  transform:translateY(-26vh);
+  display:flex;align-items:center;justify-content:center;
+  transition:opacity .5s ease;
+}
+.lock-trigger:hover .lock-moon-halo{opacity:1;transform:scale(1.1)}
+.lock-trigger.gone{opacity:0;pointer-events:none}
+
+/* 月晕：柔和光晕缓慢呼吸，银多金少，清冷交融 */
+.lock-moon-halo{
+  position:absolute;inset:-16px;border-radius:50%;
+  background:radial-gradient(circle,rgba(226,220,255,.18) 0%,rgba(206,214,236,.09) 38%,rgba(220,205,160,.05) 58%,transparent 76%);
+  animation:lockHaloBreathe 5.5s ease-in-out infinite;
+  filter:blur(2px);
+}
+@keyframes lockHaloBreathe{
+  0%,100%{opacity:.34;transform:scale(.92)}
+  50%{opacity:.55;transform:scale(1.1)}
+}
+
+/* 清辉洒落：月体下方细丝状光线，缓慢下落淡出 */
+.lock-moon-rays{position:absolute;top:52%;left:50%;width:1px;height:1px;pointer-events:none}
+.lock-moon-ray{
+  position:absolute;top:0;left:0;width:1px;height:26px;
+  background:linear-gradient(to bottom,rgba(232,228,248,.42),rgba(224,197,140,.10) 60%,transparent);
+  transform-origin:top center;
+  animation:lockRayFall 3.6s ease-in infinite;
+  opacity:0;
+}
+@keyframes lockRayFall{
+  0%{opacity:0;transform:translateY(0) scaleY(.5)}
+  15%{opacity:.6}
+  75%{opacity:.3}
+  100%{opacity:0;transform:translateY(22px) scaleY(1.3)}
+}
+
+/* 月体：银金渐变新月造型，SVG裁出弯月缺角，半透明呈现清冷孤月感 */
+.lock-moon-body{
+  position:relative;width:38px;height:38px;z-index:2;
+  opacity:.56;
+  filter:drop-shadow(0 0 6px rgba(226,220,255,.32)) drop-shadow(0 0 11px rgba(210,195,150,.18));
+  animation:lockMoonBreathe 5.5s ease-in-out infinite;
+}
+@keyframes lockMoonBreathe{
+  0%,100%{opacity:.52;filter:drop-shadow(0 0 6px rgba(226,220,255,.32)) drop-shadow(0 0 11px rgba(210,195,150,.18))}
+  50%{opacity:.68;filter:drop-shadow(0 0 9px rgba(226,220,255,.46)) drop-shadow(0 0 16px rgba(210,195,150,.3))}
+}
+.lock-moon-body svg{width:100%;height:100%;display:block}
+
+.lock-moon-particle{
+  position:absolute;width:2px;height:2px;border-radius:50%;
+  background:radial-gradient(circle,#F0F2FF,#D8CBA0);
+  box-shadow:0 0 4px 1px rgba(214,222,255,.5);
+  animation:lockOrbit linear infinite;
+  opacity:.75;
+}
+@keyframes lockOrbit{from{transform:rotate(0deg) translateX(var(--orbit-r)) rotate(0deg)}to{transform:rotate(360deg) translateX(var(--orbit-r)) rotate(-360deg)}}
+
 .lock-card{
+  position:absolute;
   display:flex;flex-direction:column;align-items:center;
   padding:22px 36px 20px;border-radius:16px;
   background:rgba(10,9,14,.5);backdrop-filter:blur(22px) saturate(1.1);-webkit-backdrop-filter:blur(22px) saturate(1.1);
   border:1px solid rgba(224,165,102,.16);
   box-shadow:0 24px 60px -20px rgba(0,0,0,.6),0 0 0 1px rgba(255,255,255,.02) inset;
-  animation:lockCardIn .7s cubic-bezier(.16,1,.3,1) both;
+  opacity:0;transform:translateY(-8vh) scale(.5);pointer-events:none;
+  transition:opacity .55s cubic-bezier(.16,1,.3,1) .1s,transform .55s cubic-bezier(.16,1,.3,1) .1s;
 }
-@keyframes lockCardIn{from{opacity:0;transform:translateY(10px) scale(.98)}to{opacity:1;transform:translateY(0) scale(1)}}
+.lock-card.show{opacity:1;transform:translateY(-8vh) scale(1);pointer-events:auto}
 
-/* 罗盘图标 —— 双层同心圆 + 中心四角星，外圈虚线缓慢旋转 */
-.lock-icon{width:42px;height:42px;margin-bottom:14px;position:relative;display:flex;align-items:center;justify-content:center}
-.lock-icon-ring{position:absolute;inset:0;border-radius:50%;border:1px dashed rgba(224,165,102,.4);animation:lockRotate 18s linear infinite}
-.lock-icon-core{width:27px;height:27px;border-radius:50%;background:radial-gradient(circle at 35% 30%,rgba(224,165,102,.22),rgba(224,165,102,.06) 70%);border:1px solid rgba(224,165,102,.3);display:flex;align-items:center;justify-content:center;box-shadow:0 0 14px -2px rgba(224,165,102,.35)}
-.lock-icon-core svg{width:13px;height:13px}
-@keyframes lockRotate{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+
+/* 卡片内迷你图标 —— 展开后卡片顶部的小型呼应符号 */
+.lock-icon-mini{width:22px;height:22px;margin-bottom:10px;opacity:.8;filter:drop-shadow(0 0 6px rgba(226,220,255,.3)) drop-shadow(0 0 10px rgba(210,195,150,.18))}
+.lock-icon-mini svg{width:100%;height:100%;display:block}
 
 .lock-title{font-family:var(--font-serif);font-size:19px;font-style:italic;font-weight:600;margin-bottom:4px;color:#F3EFE8;letter-spacing:.2px}
 .lock-sub{font-size:11.5px;color:#8B877E;margin-bottom:16px;font-weight:300;letter-spacing:.3px}
@@ -643,18 +722,45 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--fg);line-heig
 <!-- 密码锁屏 -->
 <div class="lock-screen" id="lockScreen">
   <div class="lock-laser-bg" id="laserFlowMount"></div>
+  <div class="lock-quotes" id="lockQuotesLane"></div>
   <div class="lock-content">
-    <div class="lock-card">
-      <div class="lock-icon">
-        <div class="lock-icon-ring"></div>
-        <div class="lock-icon-core">
-          <svg viewBox="0 0 24 24" fill="none" stroke="#E0A566" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v3M12 19v3M2 12h3M19 12h3" stroke-opacity=".5"/><path d="M12 6l2.5 5.5L20 14l-5.5 2.5L12 22l-2.5-5.5L4 14l5.5-2.5L12 6z"/></svg>
-        </div>
+    <div class="lock-trigger" id="lockTrigger">
+      <div class="lock-moon-halo"></div>
+      <div class="lock-moon-rays" id="lockMoonRays"></div>
+      <div class="lock-moon-body">
+        <svg viewBox="0 0 40 40">
+          <defs>
+            <linearGradient id="moonGrad" x1="15%" y1="10%" x2="90%" y2="95%">
+              <stop offset="0%" stop-color="#EEF0FA"/>
+              <stop offset="45%" stop-color="#DCE1EE"/>
+              <stop offset="78%" stop-color="#CBC3A6"/>
+              <stop offset="100%" stop-color="#B3A888"/>
+            </linearGradient>
+            <mask id="moonMask">
+              <rect width="40" height="40" fill="#fff"/>
+              <circle cx="25" cy="13" r="13.5" fill="#000"/>
+            </mask>
+          </defs>
+          <circle cx="19" cy="20" r="15" fill="url(#moonGrad)" mask="url(#moonMask)"/>
+        </svg>
+      </div>
+      <div class="lock-moon-particle" id="lockP0"></div>
+      <div class="lock-moon-particle" id="lockP1"></div>
+      <div class="lock-moon-particle" id="lockP2"></div>
+    </div>
+
+    <div class="lock-card" id="lockCard">
+      <div class="lock-icon-mini">
+        <svg viewBox="0 0 24 24">
+          <defs><linearGradient id="moonGradMini" x1="15%" y1="10%" x2="90%" y2="95%"><stop offset="0%" stop-color="#EEF0FA"/><stop offset="50%" stop-color="#DCE1EE"/><stop offset="100%" stop-color="#B3A888"/></linearGradient>
+          <mask id="moonMaskMini"><rect width="24" height="24" fill="#fff"/><circle cx="15" cy="7" r="8" fill="#000"/></mask></defs>
+          <circle cx="11" cy="12" r="9" fill="url(#moonGradMini)" mask="url(#moonMaskMini)"/>
+        </svg>
       </div>
       <div class="lock-title">Young Atlas</div>
       <div class="lock-sub">请输入访问密码</div>
       <div class="lock-form">
-        <input class="lock-input" id="lockInput" type="password" maxlength="10" placeholder="····" autofocus />
+        <input class="lock-input" id="lockInput" type="password" maxlength="10" placeholder="····" />
         <button class="lock-btn" onclick="tryUnlock()">进入</button>
       </div>
       <div class="lock-error" id="lockError"></div>
@@ -1604,7 +1710,7 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--fg);line-heig
   <p>十三座知识库全部点亮之时，你将拥有从认知到执行的完整闭环。每一步蜿蜒前行，都是在为终局蓄力。</p>
 </section>
 
-<footer class="site-footer">Young Atlas v7.3 · Built with Vela · Updated 2026-08-28</footer>
+<footer class="site-footer">Young Atlas v7.8 · Built with Vela · Updated 2026-08-28</footer>
 
 <script>
 function toggleTheme(){const h=document.documentElement;const n=h.getAttribute('data-theme')==='dark'?'light':'dark';h.setAttribute('data-theme',n);localStorage.setItem('ya-theme',n);updateIcon(n)}
@@ -1697,9 +1803,145 @@ function showYaApp(){
   document.getElementById('appShell').style.display='block';
   setTimeout(()=>{document.getElementById('lockScreen').style.display='none'},400);
   if(window.__stopLaserFlow) window.__stopLaserFlow();
+  if(window.__stopLockQuotes) window.__stopLockQuotes();
 }
 document.getElementById('lockInput').addEventListener('keydown',e=>{if(e.key==='Enter')tryUnlock()});
+
+// === 清辉孤月：光粒子环绕 + 清辉光丝洒落 + 点击展开密码卡片 ===
+(function(){
+  [0,1,2].forEach((i,idx)=>{
+    const el = document.getElementById('lockP'+i);
+    if(!el) return;
+    el.style.setProperty('--orbit-r','30px');
+    el.style.animationDuration = (6+idx*1.5)+'s';
+    el.style.animationDelay = (idx*2)+'s';
+  });
+
+  // 清辉洒落：3~4条光丝从月体下方错落垂落
+  const raysMount = document.getElementById('lockMoonRays');
+  if(raysMount){
+    const rayXs = [-9, -2, 5, 11];
+    rayXs.forEach((x,idx)=>{
+      const ray = document.createElement('div');
+      ray.className = 'lock-moon-ray';
+      ray.style.left = x + 'px';
+      ray.style.animationDelay = (idx * 0.9) + 's';
+      ray.style.animationDuration = (3.2 + idx*0.3) + 's';
+      raysMount.appendChild(ray);
+    });
+  }
+
+  const trigger = document.getElementById('lockTrigger');
+  const card = document.getElementById('lockCard');
+  if(trigger && card){
+    trigger.addEventListener('click', function(){
+      this.classList.add('gone');
+      card.classList.add('show');
+      setTimeout(()=>{ const inp=document.getElementById('lockInput'); if(inp) inp.focus(); }, 300);
+    });
+  }
+})();
 if(sessionStorage.getItem('ya_unlocked')==='1')showYaApp();
+</script>
+
+<!-- ===== 瀑布式励志语录（叠加在 LaserFlow 之上、卡片之下）=====
+     数据源：一言 API（hitokoto.cn）优先，失败/超时自动回退本地预置语录，零等待感。
+     解锁后自动调用 window.__stopLockQuotes() 清空定时器。 -->
+<script>
+(function(){
+  if(sessionStorage.getItem('ya_unlocked')==='1') return; // 已解锁则不启动
+  const lane = document.getElementById('lockQuotesLane');
+  if(!lane) return;
+
+  // 本地兜底语录（复用站内 Daily Routine 已有金句 + 补充）
+  const FALLBACK = [
+    "把每一天，都过成向往的模样",
+    "要为喜欢的东西奔跑，走路真的来不及",
+    "所有的巅峰，都曾是别人不敢走的路",
+    "慢下来，才能看见真正想要的生活",
+    "阳光给万物镀上金边，连影子都在发光",
+    "野心，是成年人最后的浪漫",
+    "世界很喧闹，慢下来是一种反叛",
+    "巅峰，是熬过所有不被看见的黑夜"
+  ];
+
+  let pool = FALLBACK.slice();
+  let poolIdx = 0;
+
+  // 一言 API 拉取（成功则追加进语录池，失败静默使用本地兜底）
+  function fetchHitokoto(){
+    fetch('https://v1.hitokoto.cn/?c=k&c=i&c=d&encode=text', {mode:'cors'})
+      .then(r => r.ok ? r.text() : Promise.reject())
+      .then(text => {
+        const t = (text||'').trim();
+        if(t && t.length <= 30 && !pool.includes(t)) pool.push(t);
+      })
+      .catch(()=>{ /* 静默回退，本地兜底已够用 */ });
+  }
+  fetchHitokoto();
+  const fetchTimer = setInterval(fetchHitokoto, 15000); // 每15s补充一条新句子进池
+
+  const DEPTH = {
+    far:  { size:12, op:.30, blur:1.6, glow:0,  factor:1.45 },
+    mid:  { size:16, op:.55, blur:.4,  glow:5,  factor:1.0  },
+    near: { size:20, op:.82, blur:0,   glow:10, factor:.72  }
+  };
+  const LANES = 10;
+  const laneBusy = new Array(LANES).fill(false);
+
+  function pickDepth(){
+    const r = Math.random();
+    if(r < 0.3) return 'far';
+    if(r < 0.75) return 'mid';
+    return 'near';
+  }
+  function freeLaneIndex(){
+    const free = [];
+    laneBusy.forEach((b,i)=>{ if(!b) free.push(i); });
+    if(free.length === 0) return -1;
+    return free[Math.floor(Math.random()*free.length)];
+  }
+
+  let spawnTimer = null;
+  function spawn(){
+    const li = freeLaneIndex();
+    if(li === -1) return;
+
+    const s = pool[poolIdx % pool.length];
+    poolIdx++;
+    const d = DEPTH[pickDepth()];
+
+    const el = document.createElement('div');
+    el.className = 'lock-quote-sent';
+    el.textContent = s;
+    el.style.fontSize = d.size + 'px';
+    el.style.color = `rgba(224,165,102,${d.op})`;
+    el.style.filter = d.blur > 0 ? `blur(${d.blur}px)` : 'none';
+    el.style.textShadow = d.glow > 0 ? `0 0 ${d.glow}px rgba(224,165,102,${d.op*0.6})` : 'none';
+    el.style.setProperty('--qop', d.op);
+
+    const laneWidth = 100 / LANES;
+    const jitter = (Math.random()-0.5) * laneWidth * 0.3;
+    const x = laneWidth * (li + 0.5) + jitter;
+    el.style.left = x + '%';
+
+    const base = 15 + Math.random() * 4;
+    const dur = base * d.factor;
+    el.style.animationDuration = dur + 's';
+
+    laneBusy[li] = true;
+    lane.appendChild(el);
+    setTimeout(() => { el.remove(); laneBusy[li] = false; }, dur * 1000 + 300);
+  }
+  spawn();
+  spawnTimer = setInterval(spawn, 2200); // 更密的生成频率，配合10条轨道实现同屏5-10条
+
+  window.__stopLockQuotes = function(){
+    if(spawnTimer) clearInterval(spawnTimer);
+    if(fetchTimer) clearInterval(fetchTimer);
+    lane.innerHTML = '';
+  };
+})();
 </script>
 
 <!-- ===== LaserFlow 登录背景特效（纯 WebGL1，零依赖，无需 three.js）=====
