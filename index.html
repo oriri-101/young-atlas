@@ -604,6 +604,30 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--fg);line-heig
 /* 密码锁屏 —— 独立暗色主题，不随站点浅/深色切换 */
 .lock-screen{position:fixed;inset:0;z-index:9999;background:#0A0B0F;display:flex;align-items:center;justify-content:center;transition:opacity .4s;overflow:hidden}
 .lock-screen.hidden{opacity:0;pointer-events:none}
+
+/* ===== 锁屏双主题：冷色（默认）/ 金色，联动 月亮·光束·瀑布文字 ===== */
+.lock-screen{
+  --m-1:#EEF0FA; --m-2:#DCE1EE; --m-3:#CBC3A6; --m-4:#B3A888;
+  --halo-1:rgba(226,220,255,.18); --halo-2:rgba(206,214,236,.09); --halo-3:rgba(220,205,160,.05);
+  --ray-1:rgba(232,228,248,.42); --ray-2:rgba(224,197,140,.10);
+  --glow-1:rgba(226,220,255,.32); --glow-2:rgba(210,195,150,.18);
+  --glow-1h:rgba(226,220,255,.46); --glow-2h:rgba(210,195,150,.30);
+  --p-1:#F0F2FF; --p-2:#D8CBA0;
+  --quote-rgb:222,228,242;
+  --beam-rgb:232,238,250;
+  --ui-accent:#B9C4DC;
+}
+.lock-screen.gold{
+  --m-1:#FFF7E2; --m-2:#F2DCA8; --m-3:#E0A566; --m-4:#C4863C;
+  --halo-1:rgba(255,228,175,.22); --halo-2:rgba(240,205,145,.11); --halo-3:rgba(224,165,102,.06);
+  --ray-1:rgba(255,234,195,.50); --ray-2:rgba(224,165,102,.14);
+  --glow-1:rgba(255,226,172,.42); --glow-2:rgba(224,165,102,.26);
+  --glow-1h:rgba(255,231,186,.58); --glow-2h:rgba(224,165,102,.38);
+  --p-1:#FFF6E0; --p-2:#E0A566;
+  --quote-rgb:224,165,102;
+  --beam-rgb:224,165,102;
+  --ui-accent:#E0A566;
+}
 .lock-laser-bg{position:absolute;inset:0;z-index:0}
 .lock-laser-bg canvas{display:block}
 
@@ -612,6 +636,7 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--fg);line-heig
 .lock-quote-sent{
   position:absolute;top:-40px;
   writing-mode:vertical-rl;text-orientation:upright;
+  transition:color .6s ease,text-shadow .6s ease;
   font-family:'Cormorant Garamond','Georgia','Noto Serif SC',serif;
   letter-spacing:3px;white-space:nowrap;
   animation-name:lockQuoteDrop;animation-timing-function:linear;animation-fill-mode:forwards;
@@ -629,7 +654,7 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--fg);line-heig
 .lock-trigger{
   position:absolute;top:50%;left:50%;
   width:64px;height:64px;cursor:pointer;margin:-32px 0 0 -32px;
-  transform:translateY(-26vh);
+  transform:translateY(-40vh);
   display:flex;align-items:center;justify-content:center;
   transition:opacity .5s ease;
 }
@@ -639,9 +664,10 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--fg);line-heig
 /* 月晕：柔和光晕缓慢呼吸，银多金少，清冷交融 */
 .lock-moon-halo{
   position:absolute;inset:-16px;border-radius:50%;
-  background:radial-gradient(circle,rgba(226,220,255,.18) 0%,rgba(206,214,236,.09) 38%,rgba(220,205,160,.05) 58%,transparent 76%);
+  background:radial-gradient(circle,var(--halo-1) 0%,var(--halo-2) 38%,var(--halo-3) 58%,transparent 76%);
   animation:lockHaloBreathe 5.5s ease-in-out infinite;
   filter:blur(2px);
+  transition:background .6s ease;
 }
 @keyframes lockHaloBreathe{
   0%,100%{opacity:.34;transform:scale(.92)}
@@ -652,8 +678,9 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--fg);line-heig
 .lock-moon-rays{position:absolute;top:52%;left:50%;width:1px;height:1px;pointer-events:none}
 .lock-moon-ray{
   position:absolute;top:0;left:0;width:1px;height:26px;
-  background:linear-gradient(to bottom,rgba(232,228,248,.42),rgba(224,197,140,.10) 60%,transparent);
+  background:linear-gradient(to bottom,var(--ray-1),var(--ray-2) 60%,transparent);
   transform-origin:top center;
+  transition:background .6s ease;
   animation:lockRayFall 3.6s ease-in infinite;
   opacity:0;
 }
@@ -668,19 +695,21 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--fg);line-heig
 .lock-moon-body{
   position:relative;width:38px;height:38px;z-index:2;
   opacity:.56;
-  filter:drop-shadow(0 0 6px rgba(226,220,255,.32)) drop-shadow(0 0 11px rgba(210,195,150,.18));
+  filter:drop-shadow(0 0 6px var(--glow-1)) drop-shadow(0 0 11px var(--glow-2));
   animation:lockMoonBreathe 5.5s ease-in-out infinite;
+  transition:filter .6s ease;
 }
 @keyframes lockMoonBreathe{
-  0%,100%{opacity:.52;filter:drop-shadow(0 0 6px rgba(226,220,255,.32)) drop-shadow(0 0 11px rgba(210,195,150,.18))}
-  50%{opacity:.68;filter:drop-shadow(0 0 9px rgba(226,220,255,.46)) drop-shadow(0 0 16px rgba(210,195,150,.3))}
+  0%,100%{opacity:.52}
+  50%{opacity:.68}
 }
 .lock-moon-body svg{width:100%;height:100%;display:block}
 
 .lock-moon-particle{
   position:absolute;width:2px;height:2px;border-radius:50%;
-  background:radial-gradient(circle,#F0F2FF,#D8CBA0);
-  box-shadow:0 0 4px 1px rgba(214,222,255,.5);
+  background:radial-gradient(circle,var(--p-1),var(--p-2));
+  box-shadow:0 0 4px 1px var(--glow-1);
+  transition:background .6s ease,box-shadow .6s ease;
   animation:lockOrbit linear infinite;
   opacity:.75;
 }
@@ -700,7 +729,25 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--fg);line-heig
 
 
 /* 卡片内迷你图标 —— 展开后卡片顶部的小型呼应符号 */
-.lock-icon-mini{width:22px;height:22px;margin-bottom:10px;opacity:.8;filter:drop-shadow(0 0 6px rgba(226,220,255,.3)) drop-shadow(0 0 10px rgba(210,195,150,.18))}
+.lock-icon-mini{width:22px;height:22px;margin-bottom:10px;opacity:.8;filter:drop-shadow(0 0 6px var(--glow-1)) drop-shadow(0 0 10px var(--glow-2));transition:filter .6s ease}
+
+/* ===== 锁屏主题切换按钮（冷色 / 金色），右上角胶囊 ===== */
+.lock-theme-toggle{
+  position:absolute;top:20px;right:22px;z-index:6;
+  display:inline-flex;align-items:center;gap:7px;
+  padding:6px 13px 6px 10px;border-radius:999px;
+  background:rgba(255,255,255,.04);
+  border:1px solid rgba(255,255,255,.10);
+  color:rgba(243,239,232,.6);font-size:11px;letter-spacing:.8px;
+  cursor:pointer;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+  transition:border-color .3s,color .3s,background .3s;
+}
+.lock-theme-toggle:hover{border-color:var(--ui-accent);color:#F3EFE8;background:rgba(255,255,255,.07)}
+.ltt-dot{
+  width:8px;height:8px;border-radius:50%;
+  background:var(--ui-accent);box-shadow:0 0 9px var(--glow-1);
+  transition:background .6s ease,box-shadow .6s ease;
+}
 .lock-icon-mini svg{width:100%;height:100%;display:block}
 
 .lock-title{font-family:var(--font-serif);font-size:19px;font-style:italic;font-weight:600;margin-bottom:4px;color:#F3EFE8;letter-spacing:.2px}
@@ -723,6 +770,10 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--fg);line-heig
 <div class="lock-screen" id="lockScreen">
   <div class="lock-laser-bg" id="laserFlowMount"></div>
   <div class="lock-quotes" id="lockQuotesLane"></div>
+  <button class="lock-theme-toggle" id="lockThemeToggle" type="button" aria-label="切换冷色或金色主题">
+    <span class="ltt-dot"></span><span class="ltt-label" id="lttLabel">冷色</span>
+  </button>
+
   <div class="lock-content">
     <div class="lock-trigger" id="lockTrigger">
       <div class="lock-moon-halo"></div>
@@ -731,10 +782,10 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--fg);line-heig
         <svg viewBox="0 0 40 40">
           <defs>
             <linearGradient id="moonGrad" x1="15%" y1="10%" x2="90%" y2="95%">
-              <stop offset="0%" stop-color="#EEF0FA"/>
-              <stop offset="45%" stop-color="#DCE1EE"/>
-              <stop offset="78%" stop-color="#CBC3A6"/>
-              <stop offset="100%" stop-color="#B3A888"/>
+              <stop offset="0%" style="stop-color:var(--m-1);transition:stop-color .6s ease"/>
+              <stop offset="45%" style="stop-color:var(--m-2);transition:stop-color .6s ease"/>
+              <stop offset="78%" style="stop-color:var(--m-3);transition:stop-color .6s ease"/>
+              <stop offset="100%" style="stop-color:var(--m-4);transition:stop-color .6s ease"/>
             </linearGradient>
             <mask id="moonMask">
               <rect width="40" height="40" fill="#fff"/>
@@ -752,7 +803,7 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--fg);line-heig
     <div class="lock-card" id="lockCard">
       <div class="lock-icon-mini">
         <svg viewBox="0 0 24 24">
-          <defs><linearGradient id="moonGradMini" x1="15%" y1="10%" x2="90%" y2="95%"><stop offset="0%" stop-color="#EEF0FA"/><stop offset="50%" stop-color="#DCE1EE"/><stop offset="100%" stop-color="#B3A888"/></linearGradient>
+          <defs><linearGradient id="moonGradMini" x1="15%" y1="10%" x2="90%" y2="95%"><stop offset="0%" style="stop-color:var(--m-1);transition:stop-color .6s ease"/><stop offset="50%" style="stop-color:var(--m-2);transition:stop-color .6s ease"/><stop offset="100%" style="stop-color:var(--m-4);transition:stop-color .6s ease"/></linearGradient>
           <mask id="moonMaskMini"><rect width="24" height="24" fill="#fff"/><circle cx="15" cy="7" r="8" fill="#000"/></mask></defs>
           <circle cx="11" cy="12" r="9" fill="url(#moonGradMini)" mask="url(#moonMaskMini)"/>
         </svg>
@@ -1710,7 +1761,7 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--fg);line-heig
   <p>十三座知识库全部点亮之时，你将拥有从认知到执行的完整闭环。每一步蜿蜒前行，都是在为终局蓄力。</p>
 </section>
 
-<footer class="site-footer">Young Atlas v7.8 · Built with Vela · Updated 2026-08-28</footer>
+<footer class="site-footer">Young Atlas v7.9 · Built with Vela · Updated 2026-09-01</footer>
 
 <script>
 function toggleTheme(){const h=document.documentElement;const n=h.getAttribute('data-theme')==='dark'?'light':'dark';h.setAttribute('data-theme',n);localStorage.setItem('ya-theme',n);updateIcon(n)}
@@ -1915,9 +1966,9 @@ if(sessionStorage.getItem('ya_unlocked')==='1')showYaApp();
     el.className = 'lock-quote-sent';
     el.textContent = s;
     el.style.fontSize = d.size + 'px';
-    el.style.color = `rgba(224,165,102,${d.op})`;
+    el.style.color = `rgba(var(--quote-rgb),${d.op})`;
     el.style.filter = d.blur > 0 ? `blur(${d.blur}px)` : 'none';
-    el.style.textShadow = d.glow > 0 ? `0 0 ${d.glow}px rgba(224,165,102,${d.op*0.6})` : 'none';
+    el.style.textShadow = d.glow > 0 ? `0 0 ${d.glow}px rgba(var(--quote-rgb),${d.op*0.6})` : 'none';
     el.style.setProperty('--qop', d.op);
 
     const laneWidth = 100 / LANES;
@@ -2230,13 +2281,13 @@ void main(){
    'uFogScale','uWSpeed','uWIntensity','uFlowStrength','uDecay','uFalloffStart',
    'uFogFallSpeed','uColor','uFade'].forEach(function(n){ U[n]=gl.getUniformLocation(prog,n); });
 
-  // 参数配置——暖沙金色调，呼应站内 --track-sand 主题色（非原组件默认的粉色）
+  // 参数配置——淡冷白雾色调（v7.9 试验），与 v7.8 银金冷调月协调
   // beamY 负值把光束核心下压到屏幕下半区，让登录卡片浮在光雾之上、不与最亮光带重叠
   const cfg = {
     wispDensity:1, tiltScale:0.012, beamX:0.0, beamY:-0.32,
     flowSpeed:0.35, vLen:1.7, hLen:0.62, fogIntensity:0.4, fogScale:0.3,
     wSpeed:15.0, wIntensity:4.5, flowStrength:0.25, decay:1.1,
-    falloffStart:1.2, fogFallSpeed:0.5, color:[224/255,165/255,102/255]
+    falloffStart:1.2, fogFallSpeed:0.5, color:[232/255,238/255,250/255]
   };
   gl.uniform1f(U.uWispDensity, cfg.wispDensity);
   gl.uniform1f(U.uTiltScale, cfg.tiltScale);
@@ -2254,6 +2305,22 @@ void main(){
   gl.uniform1f(U.uFalloffStart, cfg.falloffStart);
   gl.uniform1f(U.uFogFallSpeed, cfg.fogFallSpeed);
   gl.uniform3f(U.uColor, cfg.color[0], cfg.color[1], cfg.color[2]);
+  // 主题切换：光束色 0.4s 内平滑插值到目标色（冷白雾 ↔ 暖金），避免硬切
+  let curC = cfg.color.slice(), tgtC = cfg.color.slice();
+  window.__setLaserTheme = function(rgb){ tgtC = rgb.slice(); };
+  function stepColor(dt){
+    const d0=tgtC[0]-curC[0], d1=tgtC[1]-curC[1], d2=tgtC[2]-curC[2];
+    if(Math.abs(d0)<0.0015 && Math.abs(d1)<0.0015 && Math.abs(d2)<0.0015){
+      if(curC[0]!==tgtC[0]||curC[1]!==tgtC[1]||curC[2]!==tgtC[2]){
+        curC = tgtC.slice();
+        gl.uniform3f(U.uColor, curC[0], curC[1], curC[2]);
+      }
+      return;
+    }
+    const k = Math.min(1, dt/0.4);
+    curC[0]+=d0*k; curC[1]+=d1*k; curC[2]+=d2*k;
+    gl.uniform3f(U.uColor, curC[0], curC[1], curC[2]);
+  }
 
   const dpr = Math.min(window.devicePixelRatio||1, 1.5);
   let mouseX=0, mouseY=0, rect=null;
@@ -2290,6 +2357,7 @@ void main(){
     lastT = now;
     flowTime += dt; fogTime += dt;
     fade = Math.min(1, fade + dt/1.0);
+    stepColor(dt);
 
     gl.uniform1f(U.iTime, t);
     gl.uniform1f(U.uFlowTime, flowTime);
@@ -2308,6 +2376,41 @@ void main(){
     if(raf) cancelAnimationFrame(raf);
     try{ const lc = gl.getExtension('WEBGL_lose_context'); if(lc) lc.loseContext(); }catch(e){}
   };
+})();
+
+/* ===== 锁屏冷色/金色主题切换：联动 月亮 + 光束 + 瀑布文字 =====
+   光束色直接读 CSS 变量 --beam-rgb（单一数据源，避免 JS 里重复定义） */
+(function(){
+  const KEY = 'ya-lock-theme';
+  const screen = document.getElementById('lockScreen');
+  const btn = document.getElementById('lockThemeToggle');
+  const label = document.getElementById('lttLabel');
+  if(!screen || !btn) return;
+
+  const LABELS = { cool:'冷色', gold:'金色' };
+  const FALLBACK = [232/255, 238/255, 250/255];
+
+  function beamFromCss(){
+    const raw = getComputedStyle(screen).getPropertyValue('--beam-rgb').trim();
+    const p = raw.split(/[,\s]+/).filter(Boolean).map(function(x){ return parseFloat(x)/255; });
+    return (p.length === 3 && p.every(function(n){ return isFinite(n); })) ? p : FALLBACK;
+  }
+
+  function apply(name, persist){
+    screen.classList.toggle('gold', name === 'gold');
+    if(label) label.textContent = LABELS[name] || LABELS.cool;
+    if(window.__setLaserTheme) window.__setLaserTheme(beamFromCss());
+    if(persist){ try{ localStorage.setItem(KEY, name); }catch(e){} }
+  }
+
+  let cur = 'cool';
+  try{ const saved = localStorage.getItem(KEY); if(saved === 'gold' || saved === 'cool') cur = saved; }catch(e){}
+  apply(cur, false);
+
+  btn.addEventListener('click', function(){
+    cur = (cur === 'gold') ? 'cool' : 'gold';
+    apply(cur, true);
+  });
 })();
 </script>
 </body>
