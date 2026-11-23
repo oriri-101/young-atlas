@@ -183,6 +183,23 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--fg);line-heig
 .track--ultimate .card-sub{color:var(--track-ultimate)}.track--ultimate .card-link{color:var(--track-ultimate)}
 .track--product .card-sub{color:var(--track-product)}.track--product .card-link{color:var(--track-product)}
 
+/* 元信息行：Live 状态 + 时间戳 + 领域标签 */
+.node-meta{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:10px}
+.node-meta .status{margin-bottom:0}
+.meta-tag{
+  display:inline-flex;align-items:center;gap:4px;
+  font-size:10px;font-weight:600;letter-spacing:.6px;
+  padding:3px 9px;border-radius:5px;line-height:1.3;
+  white-space:nowrap;
+}
+.meta-tag svg{width:11px;height:11px;flex-shrink:0}
+/* 时间戳：淡填充 + 细描边 */
+.meta-time{background:var(--bg);color:var(--fg2);border:1px solid var(--border)}
+.meta-time svg{color:var(--track-product)}
+/* 领域标签：工作=主蓝 / 生活=陶色 */
+.meta-scope-work{background:var(--track-product-light);color:var(--track-product)}
+.meta-scope-life{background:var(--track-ultimate-light);color:var(--track-ultimate)}
+.meta-scope-personal{background:var(--track-growth-light);color:var(--track-growth)}
 .node.is-locked .node-card{opacity:0.5}
 .node.is-locked:hover .node-card{opacity:0.7;box-shadow:var(--shadow-sm);transform:translateY(-1px)}
 
@@ -1676,7 +1693,7 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--fg);line-heig
         <circle class="deco-dot anim-float-delay" cx="120" cy="110" r="3" fill="var(--track-product)"/>
       </svg>
       <div class="side-quote">Ideas only count when shipped.</div>
-      <div class="side-stat"><span class="big">3</span><span class="tiny">Products Live</span></div>
+      <div class="side-stat"><span class="big">4</span><span class="tiny">Products Live</span></div>
     </div>
 
     <div class="nodes-col">
@@ -1685,44 +1702,75 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--fg);line-heig
         <span class="track-name">产品实现</span>
         <span class="track-sub">从想法到落地的完整产品</span>
       </div>
-      <svg class="path-svg" viewBox="0 0 640 520" preserveAspectRatio="none">
-        <path class="path-line" d="M60,40 C200,30 160,130 340,120 S540,50 560,190 S340,300 380,360 S520,460 480,500"/>
+      <svg class="path-svg" viewBox="0 0 640 660" preserveAspectRatio="none">
+        <path class="path-line" d="M60,40 C200,30 160,130 340,120 S540,50 560,190 S340,300 380,360 S520,460 480,500 S300,580 340,640"/>
       </svg>
       <div class="nodes">
-        <!-- Product 1: 520 IP 监控操作手册 -->
+        <!-- Product 1: 权益自动领取 -->
         <div class="node">
           <div class="node-dot live">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <rect x="2" y="3" width="20" height="14" rx="2"/>
-              <path d="M8 21h8M12 17v4"/>
-              <path d="M7 8h.01M11 8h6M7 12h10"/>
-            </svg>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="8" width="18" height="4" rx="1"/><path d="M12 8v13"/><path d="M19 12v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-7"/><path d="M7.5 8a2.5 2.5 0 0 1 0-5A4.8 8 0 0 1 12 8a4.8 8 0 0 1 4.5-5 2.5 2.5 0 0 1 0 5"/></svg>
           </div>
           <div class="node-card">
-            <span class="status s-live">Live</span>
-            <h3>520 IP 监控 · 操作手册</h3>
-            <div class="card-sub">监播平台 · 后台运维 · 数据上传</div>
-            <p class="card-desc">520《爱在此刻》IP 热度监播平台的完整后台运维手册——从 CVM 服务部署、每日数据上传脚本，到异常排查、切片修复的全流程指引。适合独立维护的技术运营同学。</p>
-            <div class="tags">
-              <span class="tag">数据监播</span>
-              <span class="tag">CVM 运维</span>
-              <span class="tag">热度分析</span>
-              <span class="tag">Shell 脚本</span>
+            <div class="node-meta">
+              <span class="status s-live">Live</span>
+              <span class="meta-tag meta-time"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 14"/></svg>2026.11</span>
+              <span class="meta-tag meta-scope-personal"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21v-1a8 8 0 0 1 16 0v1"/></svg>个人</span>
             </div>
-            <a class="card-link" href="https://oriri-101.github.io/ip-monitor-manual/" target="_blank">
-              查看操作手册
+            <h3>权益自动领取</h3>
+            <div class="card-sub">个人效率 · 权益托管 · 定时任务</div>
+            <p class="card-desc">把分散在各平台的会员权益、优惠券与签到奖励集中托管，按周期自动领取，不再因为忘记而过期。面向个人日常场景，把重复操作交给定时任务，只保留结果查看这一步。</p>
+            <div class="tags">
+              <span class="tag">权益管理</span>
+              <span class="tag">自动领取</span>
+              <span class="tag">定时任务</span>
+              <span class="tag">个人工具</span>
+            </div>
+            <a class="card-link" href="http://127.0.0.1:18762/#overview" target="_blank">
+              打开权益自动领取
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
             </a>
           </div>
         </div>
 
-        <!-- Product 2: 话题监播 -->
+        <!-- Product 2: 社交热点 -->
+        <div class="node">
+          <div class="node-dot live">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
+          </div>
+          <div class="node-card">
+            <div class="node-meta">
+              <span class="status s-live">Live</span>
+              <span class="meta-tag meta-time"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 14"/></svg>2026.07</span>
+              <span class="meta-tag meta-scope-work"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>工作</span>
+            </div>
+            <h3>社交热点 · 内容营销平台</h3>
+            <div class="card-sub">热点洞察 · IP+ · 媒体平台</div>
+            <p class="card-desc">独立完成「社交热点、IP+、媒体平台」三大平台从 0 到 1 的开发与上线，并搭建「内容营销」平台承接不同类型营销 IP 的项目管理流程，为整合营销收入的过程管理提供工具支撑。从业务场景与多角色需求出发，用 AI 工具完成产品设计、前端、后端、数据库的全链路交付。</p>
+            <div class="tags">
+              <span class="tag">社交热点</span>
+              <span class="tag">IP+</span>
+              <span class="tag">媒体平台</span>
+              <span class="tag">AI Coding</span>
+            </div>
+            <a class="card-link" href="https://orionxzhang.devcloud.woa.com/" target="_blank">
+              进入社交热点
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- Product 3: 话题监播 -->
         <div class="node">
           <div class="node-dot live">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h4l3-8 4 16 3-8h4"/></svg>
           </div>
           <div class="node-card">
-            <span class="status s-live">Live</span>
+            <div class="node-meta">
+              <span class="status s-live">Live</span>
+              <span class="meta-tag meta-time"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 14"/></svg>2026.05</span>
+              <span class="meta-tag meta-scope-work"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>工作</span>
+            </div>
             <h3>话题监播平台</h3>
             <div class="card-sub">全链路话题营销 · 11 个渠道监播</div>
             <p class="card-desc">从 0 到 1 建设的话题营销监播中台，围绕「话题洞察—方案生产—营销售卖—结果复盘」全链路，上线 11 个多渠道监播平台，覆盖 520、毕业季、618、双十一等重点营销节点。落地趋势监控、优质内容、达人推荐、视频加热建议与自动登录，把热度趋势判断前置到策划期，形成从投放到复盘的闭环。</p>
@@ -1739,24 +1787,32 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--fg);line-heig
           </div>
         </div>
 
-        <!-- Product 3: 社交热点 -->
+        <!-- Product 4: 520 IP 监控操作手册 -->
         <div class="node">
           <div class="node-dot live">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="2" y="3" width="20" height="14" rx="2"/>
+              <path d="M8 21h8M12 17v4"/>
+              <path d="M7 8h.01M11 8h6M7 12h10"/>
+            </svg>
           </div>
           <div class="node-card">
-            <span class="status s-live">Live</span>
-            <h3>社交热点 · 内容营销平台</h3>
-            <div class="card-sub">热点洞察 · IP+ · 媒体平台</div>
-            <p class="card-desc">独立完成「社交热点、IP+、媒体平台」三大平台从 0 到 1 的开发与上线，并搭建「内容营销」平台承接不同类型营销 IP 的项目管理流程，为整合营销收入的过程管理提供工具支撑。从业务场景与多角色需求出发，用 AI 工具完成产品设计、前端、后端、数据库的全链路交付。</p>
-            <div class="tags">
-              <span class="tag">社交热点</span>
-              <span class="tag">IP+</span>
-              <span class="tag">媒体平台</span>
-              <span class="tag">AI Coding</span>
+            <div class="node-meta">
+              <span class="status s-live">Live</span>
+              <span class="meta-tag meta-time"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 14"/></svg>2026.04</span>
+              <span class="meta-tag meta-scope-work"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>工作</span>
             </div>
-            <a class="card-link" href="https://orionxzhang.devcloud.woa.com/" target="_blank">
-              进入社交热点
+            <h3>520 IP 监控 · 操作手册</h3>
+            <div class="card-sub">监播平台 · 后台运维 · 数据上传</div>
+            <p class="card-desc">520《爱在此刻》IP 热度监播平台的完整后台运维手册——从 CVM 服务部署、每日数据上传脚本，到异常排查、切片修复的全流程指引。适合独立维护的技术运营同学。</p>
+            <div class="tags">
+              <span class="tag">数据监播</span>
+              <span class="tag">CVM 运维</span>
+              <span class="tag">热度分析</span>
+              <span class="tag">Shell 脚本</span>
+            </div>
+            <a class="card-link" href="https://oriri-101.github.io/ip-monitor-manual/" target="_blank">
+              查看操作手册
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
             </a>
           </div>
@@ -1807,7 +1863,7 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--fg);line-heig
   <p>十三座知识库全部点亮之时，你将拥有从认知到执行的完整闭环。每一步蜿蜒前行，都是在为终局蓄力。</p>
 </section>
 
-<footer class="site-footer">Young Atlas v7.10 · Built with Vela · Updated 2026-11-23</footer>
+<footer class="site-footer">Young Atlas v7.12 · Built with Vela · Updated 2026-11-23</footer>
 
 <script>
 function toggleTheme(){const h=document.documentElement;const n=h.getAttribute('data-theme')==='dark'?'light':'dark';h.setAttribute('data-theme',n);localStorage.setItem('ya-theme',n);updateIcon(n)}
